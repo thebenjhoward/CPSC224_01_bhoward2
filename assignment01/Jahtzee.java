@@ -1,3 +1,8 @@
+/**
+ * @file: Jahtzee.java
+ * @authors: Anna Smith, Benjamin Howard
+ */
+
 import java.util.Scanner;
 
 public class Jahtzee {
