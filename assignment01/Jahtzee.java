@@ -1,6 +1,9 @@
 /**
- * @file: Jahtzee.java
- * @authors: Anna Smith, Benjamin Howard
+ * Homework #1
+ * 
+ * Due Date: January 29th, 2019
+ * 
+ * Names: Anna Smith, Benjamin Howard
  */
 
 import java.util.Scanner;
