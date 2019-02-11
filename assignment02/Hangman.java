@@ -1,3 +1,7 @@
+// Hangman.java
+// Authors: Anna Smith and Ben Howard
+// Date Due: Monday Feb 12
+
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 import java.util.Random;
@@ -11,6 +15,7 @@ public class Hangman
         StartGame();
     }
 
+    // displays menu and starts game
     public static void StartGame()
     {
         switch(showMenu())
@@ -26,9 +31,9 @@ public class Hangman
             case 2:
             break;
         }
-
     }
 
+    // Starts the actual game
     public static void RunGame(String word)
     {
         char[] guessedWord = new char[word.length()];
@@ -38,6 +43,7 @@ public class Hangman
         Boolean isGuessed = false;
         int strikes = 0;
 
+        // loops until the word is guessed or until user runs out of guesses
         while(strikes < 6 && !isGuessed)
         {
             showProgress(guessedWord, strikes);
@@ -48,17 +54,14 @@ public class Hangman
         }
 
         if(isGuessed)
-        {
-            showProgress(guessedWord, 7);
-        }
+            displayWinningMessage(word);
         else
-        {
-            showProgress(guessedWord, 6);
-        }
+            displayLosingMessage(word);
 
         StartGame();
     }
 
+    // displays menu and retuns user's selection
     public static int showMenu()
     {
         String strOption = JOptionPane.showInputDialog("Enter 1 to chose a random word\nEnter 2 to chose a word from the user\nEnter 3 to exit game");
@@ -66,14 +69,16 @@ public class Hangman
         return option;
     }
 
+    // returns word from user
     public static String enterWord()
     {
         return JOptionPane.showInputDialog("Enter your desired word").toLowerCase();
     }
 
+    // generates a random word from a list of words
     public static String getRandomWord()
     {
-        String[] wordList = { "antidisestablishmentarianism", "no", "bubbles", 
+        String[] wordList = { "antidisestablishmentarianism", "no", "bubbles",
         "sunshine", "help", "happiness", "i am being held against my will",
         "supercalifragilisticexpialidocious", "fear", "anger", "hate", "suffering",
         "pneumonoultramicroscopicsilicovolcanoconiosis", "the quick brown fox jumped "
@@ -83,6 +88,7 @@ public class Hangman
         return wordList[rand.nextInt(wordList.length)];
     }
 
+    // takes in a letter from the user
     public static char enterLetter(char[] guessedWord)
     {
         String input = JOptionPane.showInputDialog(null, new String(guessedWord) + "\nEnter a letter to guess").toLowerCase();
@@ -95,9 +101,10 @@ public class Hangman
         {
             return input.charAt(0);
         }
-        
+
     }
 
+    //
     public static Boolean guessLetter(char[] guessWord, char guessLetter, String word)
     {
         Boolean success = false;
@@ -117,7 +124,7 @@ public class Hangman
 
         if(success)
         {
-            JOptionPane.showMessageDialog(null, "You guessed a letter!");            
+            JOptionPane.showMessageDialog(null, "You guessed a letter!");
         }
         else if(alreadyEntered)
         {
@@ -130,24 +137,27 @@ public class Hangman
         return success || alreadyEntered;
     }
 
+    public static void displayWinningMessage(String correctWord){
+      String message = "Conglomeration! You win!\nYou have saved sticcman!\nThe correct word was " + correctWord;
+      JOptionPane.showMessageDialog(null, message, "Game Over", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("7.png"));
+    }
+
+    public static void displayLosingMessage(String correctWord){
+      String message = "You FOOL! YOU HAVE KILLED HIM!\nHE HAD A FAMILY, HOPES, DREAMS.\nALL FOR NAUGHT\nThe correct word was " + correctWord;
+      JOptionPane.showMessageDialog(null, message, "Game Over", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("6.png"));
+    }
+
     public static void showProgress(char[] guessWord, int strikes)
     {
         int numGuesses = 6 - strikes;
 
-
-        if(strikes == 6) {
-            JOptionPane.showMessageDialog(null, new String(guessWord) + "\nYou FOOL! YOU HAVE KILLED HIM!\nHE HAD A FAMILY, HOPES, DREAMS.\nALL FOR NAUGHT",
-            "Game Over", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Integer.toString(strikes) + ".png"));
-        } else if(strikes == 7) {
-            JOptionPane.showMessageDialog(null, new String(guessWord) + "\nConglomeration! You win\nYou have saved sticcman",
-            "Game Over", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Integer.toString(strikes) + ".png"));
-        } else if(strikes != 1) {
+        if(strikes != 1) {
             JOptionPane.showMessageDialog(null, new String(guessWord) + "\nYou have " + numGuesses + " guesses left.",
             "Status", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Integer.toString(strikes) + ".png"));
         } else {
             JOptionPane.showMessageDialog(null, new String(guessWord) + "\nYou have " + numGuesses + " guess left.",
             "Status", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Integer.toString(strikes) + ".png"));
-        } 
+        }
     }
 
     public static void addSpaces(char[] guessWord, String word)
