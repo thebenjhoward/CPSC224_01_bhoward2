@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TextMsgDecoder",
+            "request": "launch",
+            "mainClass": "TextMsgDecoder",
+            "projectName": "ICA3_51bb3ca7"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LatinTranslator",
+            "request": "launch",
+            "mainClass": "LatinTranslator",
+            "projectName": "ICA3_51bb3ca7"
+        }
+    ]
+}
