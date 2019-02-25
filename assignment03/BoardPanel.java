@@ -12,7 +12,7 @@ public class BoardPanel extends JPanel
     private String[][] buttonValues = new String[][] { new String[] { "", "", "" }, 
         new String[] { "", "", ""}, new String[] { "", "", "" }};
     
-    private Boolean isXTurn = true;
+    private boolean isXTurn = true;
 
     // Classes/Object Types
     public enum WinType 
@@ -34,13 +34,7 @@ public class BoardPanel extends JPanel
 
         public void actionPerformed(ActionEvent e)
         {
-            if(isXTurn)
-                buttonValues[row][column] = "X";
-            else
-                buttonValues[row][column] = "O";
-
-            updateButtons();
-            isXTurn = !isXTurn;
+            updateButton(row, column);
         }
     }
 
@@ -58,6 +52,75 @@ public class BoardPanel extends JPanel
         buttonBR.setText(buttonValues[2][2]);
     }
 
+    public void updateButton(int row, int column)
+    {
+        if(isXTurn)
+        {
+            buttonValues[row][column] = "X";
+        }
+        else
+        {
+            buttonValues[row][column] = "O";
+        }
+
+        isXTurn = !isXTurn;
+
+        switch(row)
+        {
+            case 0:
+            if(column == 0)
+            {
+                buttonTL.setText(buttonValues[row][column]);
+                buttonTL.setEnabled(false);
+            }
+            else if(column == 1)
+            {
+                buttonTM.setText(buttonValues[row][column]);
+                buttonTM.setEnabled(false);
+            }
+            else if(column == 2)
+            {
+                buttonTR.setText(buttonValues[row][column]);
+                buttonTR.setEnabled(false);
+            }
+            break;
+            case 1:
+            if(column == 0)
+            {
+                buttonML.setText(buttonValues[row][column]);
+                buttonML.setEnabled(false);
+            }
+            else if(column == 1)
+            {
+                buttonMM.setText(buttonValues[row][column]);
+                buttonMM.setEnabled(false);
+            }
+            else if(column == 2)
+            {
+                buttonMR.setText(buttonValues[row][column]);
+                buttonMR.setEnabled(false);
+            }
+            break;
+            case 2:
+            if(column == 0)
+            {
+                buttonBL.setText(buttonValues[row][column]);
+                buttonBL.setEnabled(false);
+            }
+            else if(column == 1)
+            {
+                buttonBM.setText(buttonValues[row][column]);
+                buttonBM.setEnabled(false);
+            }
+            else if(column == 2)
+            {
+                buttonBR.setText(buttonValues[row][column]);
+                buttonBR.setEnabled(false);
+            }
+            break;
+        }
+    }
+
     public void reset()
     {
         // set button values to empty string
@@ -68,7 +131,7 @@ public class BoardPanel extends JPanel
         }
         updateButtons();
 
-        disableButtons();
+        isXTurn = true;
     }
 
     public WinType getWinStatus()
