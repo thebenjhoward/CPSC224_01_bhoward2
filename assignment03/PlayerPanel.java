@@ -48,6 +48,7 @@ public class PlayerPanel extends JPanel {
         numWins = new JLabel("0");
         numLosses = new JLabel("0");
         playerName = new JTextField();
+        playerName.setPreferredSize(new Dimension(88, 20));
 
         if (playerNum == 1) {
             setBorder(BorderFactory.createTitledBorder("Player 1 (X):"));

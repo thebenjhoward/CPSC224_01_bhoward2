@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 public class BoardPanel extends JPanel {
@@ -15,7 +16,7 @@ public class BoardPanel extends JPanel {
 
     // Classes/Object Types
     public enum WinType {
-        NONE, X_WIN, O_WIN
+        NONE, X_WIN, O_WIN, TIE
     }
 
     private class ticTacToeListener implements ActionListener {
@@ -27,7 +28,9 @@ public class BoardPanel extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-            updateButton(row, column);
+            if (buttonValues[row][column].equals("")){
+                updateButton(row, column);
+            }
         }
     }
 
@@ -44,6 +47,10 @@ public class BoardPanel extends JPanel {
         buttonBR.setText(buttonValues[2][2]);
     }
 
+    public Boolean getIsXTurn()
+    {
+        return isXTurn;
+    }
 
     public void updateButton(int row, int column) {
         if (isXTurn) {
@@ -58,37 +65,28 @@ public class BoardPanel extends JPanel {
         case 0:
             if (column == 0) {
                 buttonTL.setText(buttonValues[row][column]);
-                buttonTL.setEnabled(false);
             } else if (column == 1) {
                 buttonTM.setText(buttonValues[row][column]);
-                buttonTM.setEnabled(false);
             } else if (column == 2) {
                 buttonTR.setText(buttonValues[row][column]);
-                buttonTR.setEnabled(false);
             }
             break;
         case 1:
             if (column == 0) {
                 buttonML.setText(buttonValues[row][column]);
-                buttonML.setEnabled(false);
             } else if (column == 1) {
                 buttonMM.setText(buttonValues[row][column]);
-                buttonMM.setEnabled(false);
             } else if (column == 2) {
                 buttonMR.setText(buttonValues[row][column]);
-                buttonMR.setEnabled(false);
             }
             break;
         case 2:
             if (column == 0) {
                 buttonBL.setText(buttonValues[row][column]);
-                buttonBL.setEnabled(false);
             } else if (column == 1) {
                 buttonBM.setText(buttonValues[row][column]);
-                buttonBM.setEnabled(false);
             } else if (column == 2) {
                 buttonBR.setText(buttonValues[row][column]);
-                buttonBR.setEnabled(false);
             }
             break;
         }
@@ -113,6 +111,8 @@ public class BoardPanel extends JPanel {
             return WinType.X_WIN;
         } else if (checkIfWon("O")) {
             return WinType.O_WIN;
+        } else if (checkIfFilled()) {
+            return WinType.TIE;
         } else {
             return WinType.NONE;
         }
@@ -141,6 +141,18 @@ public class BoardPanel extends JPanel {
             }
         }
         return false;
+    }
+
+    private Boolean checkIfFilled()
+    {
+        boolean isFilled = true;
+        for (String[] s : buttonValues) {
+            for(String value : s)
+            {
+                isFilled = isFilled && !value.equals("");
+            }
+        }
+        return isFilled;
     }
 
     public void enableButtons() {
@@ -174,41 +186,52 @@ public class BoardPanel extends JPanel {
         gameObject = parent;
 
         // Set up buttons
+        Font buttonFont = new Font("Arial", Font.BOLD, 24);
+
         buttonTL = new JButton();
         buttonTL.addActionListener(new ticTacToeListener(0, 0));
         buttonTL.setEnabled(false);
+        buttonTL.setFont(buttonFont);        
 
         buttonTM = new JButton();
         buttonTM.addActionListener(new ticTacToeListener(0, 1));
         buttonTM.setEnabled(false);
+        buttonTM.setFont(buttonFont);        
 
         buttonTR = new JButton();
         buttonTR.addActionListener(new ticTacToeListener(0, 2));
         buttonTR.setEnabled(false);
+        buttonTR.setFont(buttonFont);        
 
         buttonML = new JButton();
         buttonML.addActionListener(new ticTacToeListener(1, 0));
         buttonML.setEnabled(false);
+        buttonML.setFont(buttonFont);        
 
         buttonMM = new JButton();
         buttonMM.addActionListener(new ticTacToeListener(1, 1));
         buttonMM.setEnabled(false);
+        buttonMM.setFont(buttonFont);        
 
         buttonMR = new JButton();
         buttonMR.addActionListener(new ticTacToeListener(1, 2));
         buttonMR.setEnabled(false);
+        buttonMR.setFont(buttonFont);        
 
         buttonBL = new JButton();
         buttonBL.addActionListener(new ticTacToeListener(2, 0));
         buttonBL.setEnabled(false);
+        buttonBL.setFont(buttonFont);        
 
         buttonBM = new JButton();
         buttonBM.addActionListener(new ticTacToeListener(2, 1));
         buttonBM.setEnabled(false);
+        buttonBM.setFont(buttonFont);        
 
         buttonBR = new JButton();
         buttonBR.addActionListener(new ticTacToeListener(2, 2));
         buttonBR.setEnabled(false);
+        buttonBR.setFont(buttonFont);        
 
         // Set layout to a grid layout and add items
         setLayout(new GridLayout(3, 3));

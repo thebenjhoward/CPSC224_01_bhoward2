@@ -2,8 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class GameGUI extends JFrame
-{
+public class GameGUI extends JFrame {
     private PlayerPanel player1, player2;
     private StatusPanel status;
     private BoardPanel board;
@@ -12,54 +11,53 @@ public class GameGUI extends JFrame
     private JButton exitButton;
     private JPanel players;
     private JPanel buttonPanel;
-    private final int WINDOW_WIDTH = 400;
-    private final int WINDOW_HEIGHT = 100;
+    private final int WINDOW_WIDTH = 500;
+    private final int WINDOW_HEIGHT = 500;
 
-    public GameGUI()
-    {
-      // Display a title
-      setTitle("Tic Tac Toe");
+    private boolean gameInProgress = false;
 
-      // Specify an action for the close button.
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public GameGUI() {
+        // Display a title
+        setTitle("Tic Tac Toe");
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-      // Create a BorderLayout manager.
-      setLayout(new BorderLayout());
-      buildPlayerPanel();
-      buildButtonPanel();
-      add(players, BorderLayout.NORTH);
-      add(buttonPanel, BorderLayout.SOUTH);
+        // Specify an action for the close button.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      // Create custom panels
+        // Create a BorderLayout manager.
+        setLayout(new BorderLayout());
+        buildPlayerPanel();
 
-      //status = new StatusPanel();
-      //board = new BoardPanel();
+        // Create custom panels
+        status = new StatusPanel();
+        board = new BoardPanel(this);
 
-      //Create the button panel
-      //buildButtonPanel();
+        // Create the button panel
+        buildButtonPanel();
 
+        JPanel buttonStatusPanel = new JPanel();
+        buttonStatusPanel.setLayout(new BorderLayout());
+        buttonStatusPanel.add(buttonPanel, BorderLayout.NORTH);
+        buttonStatusPanel.add(status, BorderLayout.SOUTH);
 
-    //add(board);
-      //add(buttonPanel);
-      //add(status);
+        add(players, BorderLayout.NORTH);
+        add(board, BorderLayout.CENTER);
+        add(buttonStatusPanel, BorderLayout.SOUTH);
 
-      pack();
-      setVisible(true);
-      }
+        setVisible(true);
+    }
 
-
-      private void buildPlayerPanel(){
-          players = new JPanel();
-          players.setSize(500, 500);
-          player1 = new PlayerPanel(1);
-          player2 = new PlayerPanel(2);
-          players.add(player1);
-          players.add(player2);
-      }
+    private void buildPlayerPanel() {
+        players = new JPanel();
+        // players.setLayout(new GridLayout(1, 2));
+        player1 = new PlayerPanel(1);
+        player2 = new PlayerPanel(2);
+        players.add(player1);
+        players.add(player2);
+    }
 
     // buildButton panel method that builds the button panel
-      private void buildButtonPanel()
-      {
+    private void buildButtonPanel() {
         // Create a panel for the buttons.
         buttonPanel = new JPanel();
 
@@ -80,10 +78,13 @@ public class GameGUI extends JFrame
     }
 
     public void NextTurn() {
-        
-        // Add change to status panel here
 
-        // Check for winner 
+        if (board.getIsXTurn())
+            status.setText(player1.getName() + "'s turn");
+        else
+            status.setText(player2.getName() + "'s turn");
+
+        // Check for winner
         BoardPanel.WinType winStatus = board.getWinStatus();
         switch (winStatus) {
         case X_WIN:
@@ -91,59 +92,75 @@ public class GameGUI extends JFrame
             player1.addWin();
             player2.addLoss();
             board.disableButtons();
-            // Add change to status panel here
+            gameInProgress = false;
+            status.setText("Select new game to start again!");
             break;
         case O_WIN:
-            JOptionPane.showMessageDialog(this, player1.getName() + " Wins!");
-            player1.addWin();
-            player2.addLoss();
+            JOptionPane.showMessageDialog(this, player2.getName() + " Wins!");
+            player2.addWin();
+            player1.addLoss();
             board.disableButtons();
+            gameInProgress = false;
+            status.setText("Select new game to start again!");
+            break;
+        case TIE:
+            JOptionPane.showMessageDialog(this, "It's a Tie!");
+            board.disableButtons();
+            gameInProgress = false;
+            status.setText("Select new game to start again!");
             break;
         default:
             break;
         }
     }
 
+    private class NewGameButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
 
-      private class NewGameButtonListener implements ActionListener
-      {
-        public void actionPerformed(ActionEvent e)
-        {
-            System.out.println("new game button");
+            if (gameInProgress) {
+                if (JOptionPane.showConfirmDialog(null,
+                        "This will start a new game, reseting your current game. Are you sure?", "Are you sure?",
+                        JOptionPane.YES_NO_OPTION) == 1) {
+                    return;
+                }
+            }
+
             player1.startGame();
             player2.startGame();
 
             board.reset();
             board.enableButtons();
+            gameInProgress = true;
 
-            // Add change to status panel here
+            status.setText(player1.getName() + "'s turn");
 
         }
-      }
+    }
 
+    private class ResetButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (JOptionPane.showConfirmDialog(null,
+                    "This will end the game and set the win/loss stats to 0. Are you sure?", "Are you sure?",
+                    JOptionPane.YES_NO_OPTION) == 1) {
+                return;
+            }
 
-      private class ResetButtonListener implements ActionListener
-      {
-        public void actionPerformed(ActionEvent e)
-        {
-            System.out.println("reset button!");
             player1.reset();
             player2.reset();
             board.reset();
-        }
-      }
 
-      private class ExitButtonListener implements ActionListener
-      {
-        public void actionPerformed(ActionEvent e)
-        {
-          System.exit(0);
+            gameInProgress = false;
         }
-      }
+    }
 
-      public static void main(String[] args)
-      {
+    private class ExitButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    }
+
+    public static void main(String[] args) {
         new GameGUI();
-      }
+    }
 
 }
