@@ -80,7 +80,7 @@ public class GameGUI extends JFrame {
     public void NextTurn() {
         
         // Add change to status panel here
-        
+
         // Check for winner 
         BoardPanel.WinType winStatus = board.getWinStatus();
         switch (winStatus) {
@@ -108,11 +108,8 @@ public class GameGUI extends JFrame {
             player1.startGame();
             player2.startGame();
 
+            board.reset();
             board.enableButtons();
-            /*
-             * if game is in progress, call reset functions and then enable functions, else
-             * just call enable functions
-             */
 
             // Add change to status panel here
 
@@ -122,9 +119,9 @@ public class GameGUI extends JFrame {
     private class ResetButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("reset button!");
-            /*
-             * calls reset functions
-             */
+            player1.reset();
+            player2.reset();
+            board.reset();
         }
     }
 

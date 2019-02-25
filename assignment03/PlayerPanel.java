@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class PlayerPanel extends JPanel {
-    private JLabel player;
     private JTextField playerName;
     private JLabel name;
     private JLabel wins;
@@ -29,6 +28,16 @@ public class PlayerPanel extends JPanel {
         numLosses.setText(Integer.toString(lossesValue));
     }
 
+    public void reset()
+    {
+        winsValue = lossesValue = 0;
+        numWins.setText("0");
+        numLosses.setText("0");
+
+        playerName.setText("");
+        playerName.setEnabled(true);
+    }
+
     public PlayerPanel(int playerNum) {
         setLayout(new GridLayout(3, 2));
         setSize(250, 100);
@@ -52,9 +61,6 @@ public class PlayerPanel extends JPanel {
         add(numWins);
         add(losses);
         add(numLosses);
-
-        // add(playerName);
-
     }
 
     void startGame() {
