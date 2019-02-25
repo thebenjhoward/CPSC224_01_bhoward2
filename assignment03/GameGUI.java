@@ -1,18 +1,19 @@
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-
 
 public class GameGUI extends JFrame
 {
     private PlayerPanel player1, player2;
     private StatusPanel status;
     private BoardPanel board;
+    private JButton newGameButton;
+    private JButton resetButton;
+    private JButton exitButton;
+    private JPanel players;
     private JPanel buttonPanel;
-    private JButton newGame;
-    private JButton reset;
-    private JButton exit;
     private final int WINDOW_WIDTH = 400;
     private final int WINDOW_HEIGHT = 100;
-
 
     public GameGUI()
     {
@@ -24,28 +25,39 @@ public class GameGUI extends JFrame
 
       // Create a BorderLayout manager.
       setLayout(new BorderLayout());
+      buildPlayerPanel();
+      buildButtonPanel();
+      add(players, BorderLayout.NORTH);
+      add(buttonPanel, BorderLayout.SOUTH);
 
       // Create custom panels
-      player1 = new PlayerPanel();
-      player2 = new PlayerPanel();
-      status = new StatusPanel();
-      board = new BoardPanel();
+
+      //status = new StatusPanel();
+      //board = new BoardPanel();
 
       //Create the button panel
-      buildButtonPanel();
+      //buildButtonPanel();
 
-      add(player1);
-      add(player2);
-      add(board);
-      add(buttonPanel);
-      add(status);
+
+    //add(board);
+      //add(buttonPanel);
+      //add(status);
 
       pack();
       setVisible(true);
       }
 
 
-      // buildButton panel method that builds the button panel
+      private void buildPlayerPanel(){
+          players = new JPanel();
+          players.setSize(500, 500);
+          player1 = new PlayerPanel(1);
+          player2 = new PlayerPanel(2);
+          players.add(player1);
+          players.add(player2);
+      }
+
+    // buildButton panel method that builds the button panel
       private void buildButtonPanel()
       {
         // Create a panel for the buttons.
@@ -67,14 +79,19 @@ public class GameGUI extends JFrame
         buttonPanel.add(exitButton);
       }
 
+
       private class NewGameButtonListener implements ActionListener
       {
         public void actionPerformed(ActionEvent e)
         {
+            System.out.println("new game button");
+            player1.startGame();
+            player2.startGame();
             /*
             if game is in progress, call reset functions and then enable functions,
             else just call enable functions
             */
+
         }
       }
 
@@ -82,6 +99,7 @@ public class GameGUI extends JFrame
       {
         public void actionPerformed(ActionEvent e)
         {
+            System.out.println("reset button!");
             /*
             calls reset functions
             */
@@ -92,14 +110,13 @@ public class GameGUI extends JFrame
       {
         public void actionPerformed(ActionEvent e)
         {
-            System.exit(0);
+          System.exit(0);
         }
       }
 
       public static void main(String[] args)
       {
-        new OrderCalculatorGUI();
+        new GameGUI();
       }
-
 
 }
