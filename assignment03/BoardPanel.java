@@ -2,45 +2,37 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.GridLayout;
 
-public class BoardPanel extends JPanel
-{
+public class BoardPanel extends JPanel {
     // Data Members
-    private JButton buttonTL, buttonTM, buttonTR,
-                    buttonML, buttonMM, buttonMR,
-                    buttonBL, buttonBM, buttonBR;
+    private JButton buttonTL, buttonTM, buttonTR, buttonML, buttonMM, buttonMR, buttonBL, buttonBM, buttonBR;
 
-    private String[][] buttonValues = new String[][] { new String[] { "", "", "" }, 
-        new String[] { "", "", ""}, new String[] { "", "", "" }};
-    
+    private String[][] buttonValues = new String[][] { new String[] { "", "", "" }, new String[] { "", "", "" },
+            new String[] { "", "", "" } };
+
     private boolean isXTurn = true;
 
+    private GameGUI gameObject;
+
     // Classes/Object Types
-    public enum WinType 
-    {
-        NONE,
-        X_WIN,
-        O_WIN
+    public enum WinType {
+        NONE, X_WIN, O_WIN
     }
 
-    private class ticTacToeListener implements ActionListener
-    {
+    private class ticTacToeListener implements ActionListener {
         private int row, column;
 
-        public ticTacToeListener(int row, int column)
-        {
+        public ticTacToeListener(int row, int column) {
             this.row = row;
             this.column = column;
         }
 
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             updateButton(row, column);
         }
     }
 
     // Methods
-    public void updateButtons()
-    {
+    public void updateButtons() {
         buttonTL.setText(buttonValues[0][0]);
         buttonTM.setText(buttonValues[0][1]);
         buttonTR.setText(buttonValues[0][2]);
@@ -52,77 +44,59 @@ public class BoardPanel extends JPanel
         buttonBR.setText(buttonValues[2][2]);
     }
 
-    public void updateButton(int row, int column)
-    {
-        if(isXTurn)
-        {
+
+    public void updateButton(int row, int column) {
+        if (isXTurn) {
             buttonValues[row][column] = "X";
-        }
-        else
-        {
+        } else {
             buttonValues[row][column] = "O";
         }
 
         isXTurn = !isXTurn;
 
-        switch(row)
-        {
-            case 0:
-            if(column == 0)
-            {
+        switch (row) {
+        case 0:
+            if (column == 0) {
                 buttonTL.setText(buttonValues[row][column]);
                 buttonTL.setEnabled(false);
-            }
-            else if(column == 1)
-            {
+            } else if (column == 1) {
                 buttonTM.setText(buttonValues[row][column]);
                 buttonTM.setEnabled(false);
-            }
-            else if(column == 2)
-            {
+            } else if (column == 2) {
                 buttonTR.setText(buttonValues[row][column]);
                 buttonTR.setEnabled(false);
             }
             break;
-            case 1:
-            if(column == 0)
-            {
+        case 1:
+            if (column == 0) {
                 buttonML.setText(buttonValues[row][column]);
                 buttonML.setEnabled(false);
-            }
-            else if(column == 1)
-            {
+            } else if (column == 1) {
                 buttonMM.setText(buttonValues[row][column]);
                 buttonMM.setEnabled(false);
-            }
-            else if(column == 2)
-            {
+            } else if (column == 2) {
                 buttonMR.setText(buttonValues[row][column]);
                 buttonMR.setEnabled(false);
             }
             break;
-            case 2:
-            if(column == 0)
-            {
+        case 2:
+            if (column == 0) {
                 buttonBL.setText(buttonValues[row][column]);
                 buttonBL.setEnabled(false);
-            }
-            else if(column == 1)
-            {
+            } else if (column == 1) {
                 buttonBM.setText(buttonValues[row][column]);
                 buttonBM.setEnabled(false);
-            }
-            else if(column == 2)
-            {
+            } else if (column == 2) {
                 buttonBR.setText(buttonValues[row][column]);
                 buttonBR.setEnabled(false);
             }
             break;
         }
+
+        gameObject.NextTurn();
     }
 
-    public void reset()
-    {
+    public void reset() {
         // set button values to empty string
         for (String[] s : buttonValues) {
             s[0] = "";
@@ -134,52 +108,42 @@ public class BoardPanel extends JPanel
         isXTurn = true;
     }
 
-    public WinType getWinStatus()
-    {
-        if(checkIfWon("X"))
-        {
+    public WinType getWinStatus() {
+        if (checkIfWon("X")) {
             return WinType.X_WIN;
-        }
-        else if(checkIfWon("O"))
-        {
+        } else if (checkIfWon("O")) {
             return WinType.O_WIN;
-        }
-        else
-        {
+        } else {
             return WinType.NONE;
         }
     }
 
-    private Boolean checkIfWon(String player)
-    {
-        if(buttonValues[0][0].equals(player))
-        {
-            if( (buttonValues[0][1].equals(player) && buttonValues[0][2].equals(player)) ||
-                (buttonValues[1][0].equals(player) && buttonValues[2][0].equals(player)) ||
-                (buttonValues[1][1].equals(player) && buttonValues[2][2].equals(player))) {
-                    return true;
-                }
+    private Boolean checkIfWon(String player) {
+        if (buttonValues[0][0].equals(player)) {
+            if ((buttonValues[0][1].equals(player) && buttonValues[0][2].equals(player))
+                    || (buttonValues[1][0].equals(player) && buttonValues[2][0].equals(player))
+                    || (buttonValues[1][1].equals(player) && buttonValues[2][2].equals(player))) {
+                return true;
+            }
         }
-        if(buttonValues[0][1].equals(player) && buttonValues[1][1].equals(player) && buttonValues[2][1].equals(player))
-        {
+        if (buttonValues[0][1].equals(player) && buttonValues[1][1].equals(player)
+                && buttonValues[2][1].equals(player)) {
             return true;
         }
-        if(buttonValues[1][0].equals(player) && buttonValues[1][1].equals(player) && buttonValues[1][2].equals(player))
-        {
+        if (buttonValues[1][0].equals(player) && buttonValues[1][1].equals(player)
+                && buttonValues[1][2].equals(player)) {
             return true;
         }
-        if(buttonValues[2][0].equals(player))
-        {
-            if( (buttonValues[1][1].equals(player) && buttonValues[0][2].equals(player)) ||
-                (buttonValues[2][1].equals(player) && buttonValues[2][2].equals(player))) {
-                    return true;
+        if (buttonValues[2][0].equals(player)) {
+            if ((buttonValues[1][1].equals(player) && buttonValues[0][2].equals(player))
+                    || (buttonValues[2][1].equals(player) && buttonValues[2][2].equals(player))) {
+                return true;
             }
         }
         return false;
     }
 
-    public void enableButtons()
-    {
+    public void enableButtons() {
         buttonTL.setEnabled(true);
         buttonTM.setEnabled(true);
         buttonTR.setEnabled(true);
@@ -191,8 +155,7 @@ public class BoardPanel extends JPanel
         buttonBR.setEnabled(true);
     }
 
-    public void disableButtons()
-    {
+    public void disableButtons() {
         buttonTL.setEnabled(false);
         buttonTM.setEnabled(false);
         buttonTR.setEnabled(false);
@@ -205,10 +168,11 @@ public class BoardPanel extends JPanel
 
     }
 
-    
     // Constructor
-    public BoardPanel()
-    {
+    public BoardPanel(GameGUI parent) {
+        // Set up parent
+        gameObject = parent;
+
         // Set up buttons
         buttonTL = new JButton();
         buttonTL.addActionListener(new ticTacToeListener(0, 0));
@@ -248,8 +212,14 @@ public class BoardPanel extends JPanel
 
         // Set layout to a grid layout and add items
         setLayout(new GridLayout(3, 3));
-        this.add(buttonTL); this.add(buttonTM); this.add(buttonTR);
-        this.add(buttonML); this.add(buttonMM); this.add(buttonMR);
-        this.add(buttonBL); this.add(buttonBM); this.add(buttonBR);
+        this.add(buttonTL);
+        this.add(buttonTM);
+        this.add(buttonTR);
+        this.add(buttonML);
+        this.add(buttonMM);
+        this.add(buttonMR);
+        this.add(buttonBL);
+        this.add(buttonBM);
+        this.add(buttonBR);
     }
 }
