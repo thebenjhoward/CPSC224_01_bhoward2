@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - BookShop",
+            "request": "launch",
+            "mainClass": "BookShop"
+        }
+    ]
+}

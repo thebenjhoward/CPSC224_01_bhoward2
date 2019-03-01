@@ -47,8 +47,7 @@ public class BoardPanel extends JPanel {
         buttonBR.setText(buttonValues[2][2]);
     }
 
-    public Boolean getIsXTurn()
-    {
+    public Boolean getIsXTurn() {
         return isXTurn;
     }
 

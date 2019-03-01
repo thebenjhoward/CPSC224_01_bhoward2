@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Dice",
+            "request": "launch",
+            "mainClass": "Dice"
+        }
+    ]
+}
