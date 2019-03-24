@@ -1,4 +1,4 @@
 
-public class PXEllipse {
-    
+public class PXEllipse extends PXObject{
+
 }

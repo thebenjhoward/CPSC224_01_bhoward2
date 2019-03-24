@@ -1,4 +1,4 @@
 
-public class PXRectangle {
-    
+public class PXRectangle extends PXObject {
+
 }

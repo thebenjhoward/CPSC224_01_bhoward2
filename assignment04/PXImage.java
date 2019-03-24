@@ -1,4 +1,4 @@
 
-public class PXImage {
-    
+public class PXImage extends PXObject{
+
 }
