@@ -50,12 +50,16 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         }
 
         public void mouseMoved(MouseEvent e) {
-            mouseDX = Math.abs(mouseX - e.getX());
-            mouseDY = Math.abs(mouseY - e.getY());
+            mouseDX = e.getX() - mouseX;
+            mouseDY = e.getY() - mouseY;
 
             mouseX = e.getX();
             mouseY = e.getY();
         }
+    }
+
+    public addPXObject(PXObject object){
+      pxObjects.add(object);
     }
 
 }
