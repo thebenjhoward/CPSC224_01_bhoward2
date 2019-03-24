@@ -12,7 +12,6 @@ public class PXTriangle extends PXObject {
         xVerts = new int[] { x1, x2, x3 };
         yVerts = new int[] { y1, y2, y3 };
 
-
         this.moveMult = moveMult;
         this.color = color;
     }
