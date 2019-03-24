@@ -1,6 +1,8 @@
 import java.awt.Graphics;
 import java.awt.Color;
 
-public class PXObject {
+public abstract class PXObject {
+    protected int moveMult;
 
+    public abstract void paint(int mouseDX, int mouseDY);
 }
