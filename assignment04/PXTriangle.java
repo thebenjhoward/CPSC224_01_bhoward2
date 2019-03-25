@@ -4,27 +4,44 @@ import java.awt.Color;
 
 public class PXTriangle extends PXObject {
 
-    private int[] xVerts, yVerts;
-    private Polygon gPolygon;
+    private Polygon triPoly;
     private Color color;
 
-    public PXTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int moveMult, Color color) {
-        xVerts = new int[] { x1, x2, x3 };
-        yVerts = new int[] { y1, y2, y3 };
+    public PXTriangle(int x1, int y1, int x2, int y2, int x3, int y3, float moveMult, Color color) {
+
+        triPoly = new Polygon(new int[] { x1, x2, x3 }, new int[] { y1, y2, y3 }, 3);
 
         this.moveMult = moveMult;
         this.color = color;
     }
 
     public void paint(int mouseDX, int mouseDY, Graphics g) {
-        for(int i = 0; i < 3; i++)
+
+        if (isMoving()) {
+            int xPos = 0, yPos = 0;
+            for (int i = 0; i < 3; i++) {
+                xPos += triPoly.xpoints[i];
+                yPos += triPoly.ypoints[i];
+            }
+            xPos /= 3;
+            yPos /= 3;
+            
+            if (xPos > (Paralax.PANEL_WIDTH * 2)) {
+                xPos = -100;
+            }
+            if (yPos > (Paralax.PANEL_HEIGHT * 2)) {
+                yPos = -100;
+            }
+        }
+        
+        for(int i = 0; i < triPoly.npoints; i++)
         {
-            xVerts[i] += mouseDX * moveMult;
-            yVerts[i] += mouseDY * moveMult;
+            triPoly.xpoints[i] += (mouseDX * moveMult) + dx;
+            triPoly.ypoints[i] += (mouseDY * moveMult) + dy;
         }
 
         g.setColor(color);
-        g.fillPolygon(xVerts, yVerts, 3);
+        g.fillPolygon(triPoly);
     }
 
 }

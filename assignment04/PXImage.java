@@ -12,7 +12,7 @@ public class PXImage extends PXObject {
     private int xPos, yPos, width, height;
     boolean loadedImage = false;
 
-    public PXImage(int xPos, int yPos, String path, int moveMult) {
+    public PXImage(int xPos, int yPos, String path, float moveMult) {
         loadImage(path);
         width = image.getWidth(null);
         height = image.getHeight(null);
@@ -35,9 +35,21 @@ public class PXImage extends PXObject {
     }
 
     public void paint(int mouseDX, int mouseDY, Graphics g) {
-        xPos += mouseDX * moveMult;
-        yPos += mouseDY * moveMult;
+        if(loadedImage);
+        {
+            if (isMoving()) {
+                if (xPos > (Paralax.PANEL_WIDTH * 2)) {
+                    xPos = -100;
+                }
+                if (yPos > (Paralax.PANEL_HEIGHT * 2)) {
+                    yPos = -100;
+                }
+            }
 
-        g.drawImage(image, xPos, yPos, null);
+            xPos += mouseDX * moveMult;
+            yPos += mouseDY * moveMult;
+
+            g.drawImage(image, xPos, yPos, null);
+        }
     }
 }

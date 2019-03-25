@@ -17,16 +17,14 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     private ArrayList<PXObject> pxObjects = new ArrayList<PXObject>();
 
     public ParalaxPanel() {
-        int mouseX = 150;
-        int mouseY = 150;
         int mouseDX = 0;
         int mouseDY = 0;
 
         ArrayList<PXObject> pxObjects = new ArrayList<PXObject>();
-        // pxObjects.add()
 
-        // Add a mouse motion listener
-        addMouseMotionListener(new MyMouseMotionListener());
+        // Add mouse listeners
+        addMouseMotionListener(new ParalaxMotionListener());
+        addMouseListener(new ParalaxMouseListner());
 
         timer = new Timer(delay, this);
         timer.start(); // starts timer
@@ -39,27 +37,54 @@ public class ParalaxPanel extends JPanel implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g); // call superclass's paintComponent
+        
         for (PXObject obj : pxObjects) {
-            // obj.paint(mouseDX, mouseDY, g);
+            obj.paint(mouseDX, mouseDY, g);
+        }
+
+        mouseDX = mouseDY = 0;
+    }
+
+
+    private class ParalaxMouseListner implements MouseListener {
+        public void mouseClicked(MouseEvent e) {
+            // not implemented
+        }
+
+        public void mouseExited(MouseEvent e) {
+            // not implemented
+        }
+
+        public void mouseEntered(MouseEvent e) {
+            mouseX = e.getX();
+            mouseY = e.getY();
+        }
+
+        public void mousePressed(MouseEvent e) {
+            // not implemented
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            // not implemented
         }
     }
 
-    private class MyMouseMotionListener implements MouseMotionListener {
+    private class ParalaxMotionListener implements MouseMotionListener {
         // unused
         public void mouseDragged(MouseEvent e) {
         }
 
         public void mouseMoved(MouseEvent e) {
-            mouseDX = e.getX() - mouseX;
-            mouseDY = e.getY() - mouseY;
+            mouseDX += e.getX() - mouseX;
+            mouseDY += e.getY() - mouseY;
 
             mouseX = e.getX();
             mouseY = e.getY();
         }
     }
 
-    public addPXObject(PXObject object){
-      pxObjects.add(object);
+    public void addPXObject(PXObject object) {
+        pxObjects.add(object);
     }
 
 }
