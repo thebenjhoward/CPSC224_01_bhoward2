@@ -31,10 +31,15 @@ public class PXPolygon extends PXObject {
             }
         }
 
-        poly.translate((int) (mouseDX * moveMult) + dx, (int) (mouseDY * moveMult) + dy);
+        Polygon cpyPolygon = new Polygon(poly.xpoints, poly.ypoints, poly.npoints);
+        for(int i = 0; i < poly.npoints; i++)
+        {
+            cpyPolygon.xpoints[i] += (mouseDX * moveMult) + dx;
+            cpyPolygon.ypoints[i] += (mouseDY * moveMult) + dy;
+        }
 
         g.setColor(color);
-        g.fillPolygon(poly);
+        g.fillPolygon(cpyPolygon);
     }
 
 }

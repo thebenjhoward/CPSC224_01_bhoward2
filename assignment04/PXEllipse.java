@@ -17,10 +17,21 @@ public class PXEllipse extends PXObject {
     }
 
     public void paint(int mouseDX, int mouseDY, Graphics g) {
-        xPos += mouseDX * moveMult;
-        yPos += mouseDY * moveMult;
+        if (isMoving()) {
+            if(xPos > (Paralax.PANEL_WIDTH * 2))
+            {
+                xPos = -100;
+            }
+            if(yPos > (Paralax.PANEL_HEIGHT * 2))
+            {
+                yPos = -100;
+            }
+        }
+        
+        xPos += dx;
+        yPos += dy;
 
         g.setColor(color);
-        g.drawOval(xPos, yPos, width, height);
+        g.drawOval(xPos + (int)(mouseDX * moveMult), yPos + (int)(mouseDY * moveMult), width, height);
     }
 }

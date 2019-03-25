@@ -27,11 +27,10 @@ public class PXRectangle extends PXObject {
             }
         }
 
-        this.xPos += (mouseDX * moveMult) + dx;
-        this.yPos += (mouseDY * moveMult) + dy;
-
+        xPos += dx;
+        yPos += dy;
         
         g.setColor(color);
-        g.fillRect(xPos, yPos, width, height);
+        g.fillRect(xPos + (int)(mouseDX * moveMult), yPos + (int)(mouseDY * moveMult), width, height);
     }
 }

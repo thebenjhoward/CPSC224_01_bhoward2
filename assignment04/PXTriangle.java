@@ -33,15 +33,15 @@ public class PXTriangle extends PXObject {
                 yPos = -100;
             }
         }
-        
+        Polygon cpyPolygon = new Polygon(triPoly.xpoints, triPoly.ypoints, triPoly.npoints);
         for(int i = 0; i < triPoly.npoints; i++)
         {
-            triPoly.xpoints[i] += (mouseDX * moveMult) + dx;
-            triPoly.ypoints[i] += (mouseDY * moveMult) + dy;
+            cpyPolygon.xpoints[i] += (mouseDX * moveMult) + dx;
+            cpyPolygon.ypoints[i] += (mouseDY * moveMult) + dy;
         }
 
         g.setColor(color);
-        g.fillPolygon(triPoly);
+        g.fillPolygon(cpyPolygon);
     }
 
 }

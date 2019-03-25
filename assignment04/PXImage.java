@@ -35,7 +35,8 @@ public class PXImage extends PXObject {
     }
 
     public void paint(int mouseDX, int mouseDY, Graphics g) {
-        if(loadedImage);
+        if (loadedImage)
+            ;
         {
             if (isMoving()) {
                 if (xPos > (Paralax.PANEL_WIDTH * 2)) {
@@ -49,7 +50,7 @@ public class PXImage extends PXObject {
             xPos += mouseDX * moveMult;
             yPos += mouseDY * moveMult;
 
-            g.drawImage(image, xPos, yPos, null);
+            g.drawImage(image, xPos + (int) (mouseDX * moveMult), yPos + (int) (mouseDY * moveMult), null);
         }
     }
 }

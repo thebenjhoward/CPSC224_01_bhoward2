@@ -9,22 +9,16 @@ import java.awt.event.*;
 public class ParalaxPanel extends JPanel implements ActionListener {
     private int delay = 10;
     protected Timer timer;
-    private int mouseX;
-    private int mouseY;
-    private int mouseDX;
-    private int mouseDY;
-    private int XDist;
-    private int YDist;
+    private int xDist;
+    private int yDist;
 
-    private ArrayList<PXObject> pxObjects = new ArrayList<PXObject>();
+    private ArrayList<PXObject> pxObjects;
 
     public ParalaxPanel() {
-        int mouseDX = 0;
-        int mouseDY = 0;
-        int XDist = 0;
-        int YDist = 0;
+        xDist = 0;
+        yDist = 0;
 
-        ArrayList<PXObject> pxObjects = new ArrayList<PXObject>();
+        pxObjects = new ArrayList<PXObject>();
 
         // Add mouse listeners
         addMouseMotionListener(new ParalaxMotionListener());
@@ -49,7 +43,6 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         mouseDX = mouseDY = 0;
     }
 
-
     private class ParalaxMouseListner implements MouseListener {
         public void mouseClicked(MouseEvent e) {
             // not implemented
@@ -60,8 +53,8 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         }
 
         public void mouseEntered(MouseEvent e) {
-            mouseX = e.getX();
-            mouseY = e.getY();
+            xDist = e.getX() - 500;
+            yDist = e.getY() - 500;
         }
 
         public void mousePressed(MouseEvent e) {
@@ -81,12 +74,6 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         public void mouseMoved(MouseEvent e) {
             xDist = e.getX() - 500;
             yDist = e.getY() - 500;
-
-            mouseDX += e.getX() - mouseX;
-            mouseDY += e.getY() - mouseY;
-
-            mouseX = e.getX();
-            mouseY = e.getY();
         }
     }
 
