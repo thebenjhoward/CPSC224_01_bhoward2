@@ -13,6 +13,8 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     private int currentY;
     private int lineX;
     private int lineY;
+    private boolean drawShape;
+    private boolean dragged;
 
     private ArrayList<PXObject> pxObjects;
 
@@ -35,16 +37,19 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         repaint();
     }
 
-    /**Paints all objects in pxObjects
-     * @param g Graphics object for the component */
+    /**
+     * Paints all objects in pxObjects
+     * 
+     * @param g Graphics object for the component
+     */
     public void paint(Graphics g) {
         super.paint(g); // call superclass's paintComponent
 
-        if(drawShape)
-          g.drawRect(currentX, currentY, 10, 10);
+        if (drawShape)
+            g.drawRect(currentX, currentY, 10, 10);
 
-        if(dragged){
-          g.drawLine(lineX, lineY, currentX, currentY);
+        if (dragged) {
+            g.drawLine(lineX, lineY, currentX, currentY);
         }
 
         for (PXObject obj : pxObjects) {
@@ -55,7 +60,7 @@ public class ParalaxPanel extends JPanel implements ActionListener {
 
     private class ParalaxMouseListner implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-          drawShape = true;
+            drawShape = true;
         }
 
         public void mouseExited(MouseEvent e) {
@@ -68,15 +73,15 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         }
 
         public void mousePressed(MouseEvent e) {
-          lineX = e.getX();
-          lineY = e.getY();
-          repaint();
+            lineX = e.getX();
+            lineY = e.getY();
+            repaint();
         }
 
         public void mouseReleased(MouseEvent e) {
-          drawShape = true;
-          dragged = false;
-          repaint();
+            drawShape = true;
+            dragged = false;
+            repaint();
         }
     }
 
