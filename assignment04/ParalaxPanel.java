@@ -13,12 +13,16 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     private int mouseY;
     private int mouseDX;
     private int mouseDY;
+    private int XDist;
+    private int YDist;
 
     private ArrayList<PXObject> pxObjects = new ArrayList<PXObject>();
 
     public ParalaxPanel() {
         int mouseDX = 0;
         int mouseDY = 0;
+        int XDist = 0;
+        int YDist = 0;
 
         ArrayList<PXObject> pxObjects = new ArrayList<PXObject>();
 
@@ -37,9 +41,9 @@ public class ParalaxPanel extends JPanel implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g); // call superclass's paintComponent
-        
+
         for (PXObject obj : pxObjects) {
-            obj.paint(mouseDX, mouseDY, g);
+            obj.paint(xDist, yDist, g);
         }
 
         mouseDX = mouseDY = 0;
@@ -75,6 +79,9 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         }
 
         public void mouseMoved(MouseEvent e) {
+            xDist = e.getX() - 500;
+            yDist = e.getY() - 500;
+
             mouseDX += e.getX() - mouseX;
             mouseDY += e.getY() - mouseY;
 
