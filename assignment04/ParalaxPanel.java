@@ -14,6 +14,11 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     private int lineX;
     private int lineY;
 
+    private int birdX = 0;		// x position
+    private int birdY = 0;		// y position
+    private int birdDX = 2;		// increment amount (x coord)
+    private int birdDY = 2;		// increment amount (y coord)
+
     private ArrayList<PXObject> pxObjects;
 
     public ParalaxPanel() {
@@ -38,7 +43,6 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     /**Paints all objects in pxObjects
      * @param g Graphics object for the component */
     public void paint(Graphics g) {
-        super.paint(g); // call superclass's paintComponent
 
         if(drawShape)
           g.drawRect(currentX, currentY, 10, 10);
@@ -46,6 +50,15 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         if(dragged){
           g.drawLine(lineX, lineY, currentX, currentY);
         }
+
+        if (birdX < 15)			birdDX = Math.abs(dx);
+	      if (birdX > getWidth() - 15)	birdDX = -Math.abs(dx);
+	      if (birdY < 15)			birdDY = Math.abs(dy);
+	      if (birdY > getHeight() - 15)	birdDY = -Math.abs(dy);
+
+        birdX += dx;
+	      birdY += dy;
+        g.fillOval(x - 15, y - 15, 15*2, 15*2);
 
         for (PXObject obj : pxObjects) {
             obj.paint(xDist, yDist, g);
