@@ -50,25 +50,27 @@ public class ParalaxPanel extends JPanel implements ActionListener {
      */
     public void paint(Graphics g) {
 
-        if(drawShape)
+        for (PXObject obj : pxObjects) {
+          obj.paint(xDist, yDist, g);
+        }
+
+        if(drawingShape)
           g.drawRect(currentX, currentY, 10, 10);
 
-        if(dragged){
+        if(isDragged){
           g.drawLine(lineX, lineY, currentX, currentY);
         }
 
-        if (birdX < 15)			birdDX = Math.abs(dx);
-	      if (birdX > getWidth() - 15)	birdDX = -Math.abs(dx);
-	      if (birdY < 15)			birdDY = Math.abs(dy);
-	      if (birdY > getHeight() - 15)	birdDY = -Math.abs(dy);
+        if (birdX < 15)			birdDX = Math.abs(birdDX);
+	      if (birdX > getWidth() - 15)	birdDX = -Math.abs(birdDX);
+	      if (birdY < 15)			birdDY = Math.abs(birdDY);
+	      if (birdY > getHeight() - 15)	birdDY = -Math.abs(birdDY);
 
-        birdX += dx;
-	      birdY += dy;
-        g.fillOval(x - 15, y - 15, 15*2, 15*2);
+        birdX += birdDX;
+	      birdY += birdDY;
+        g.fillOval(birdX - 15, birdY - 15, 15*2, 15*2);
 
-        for (PXObject obj : pxObjects) {
-            obj.paint(xDist, yDist, g);
-        }
+
 
         if (isDragged) {
             g.setColor(Color.decode("0xff00d2"));
