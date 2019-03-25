@@ -17,20 +17,18 @@ public class PXRectangle extends PXObject {
 
     public void paint(int mouseDX, int mouseDY, Graphics g) {
         if (isMoving()) {
-            if(xPos > (Paralax.PANEL_WIDTH * 2))
-            {
+            if (xPos > (Paralax.PANEL_WIDTH * 2)) {
                 xPos = -100;
             }
-            if(yPos > (Paralax.PANEL_HEIGHT * 2))
-            {
+            if (yPos > (Paralax.PANEL_HEIGHT * 2)) {
                 yPos = -100;
             }
         }
 
         xPos += dx;
         yPos += dy;
-        
+
         g.setColor(color);
-        g.fillRect(xPos + (int)(mouseDX * moveMult), yPos + (int)(mouseDY * moveMult), width, height);
+        g.fillRect(xPos + (int) (mouseDX * moveMult), yPos + (int) (mouseDY * moveMult), width, height);
     }
 }

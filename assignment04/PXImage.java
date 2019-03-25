@@ -22,8 +22,7 @@ public class PXImage extends PXObject {
         this.moveMult = moveMult;
     }
 
-    private loadImage(String path)
-    {
+    private void loadImage(String path) {
         try {
             image = ImageIO.read(new File(path));
             loadedImage = true;
@@ -31,7 +30,6 @@ public class PXImage extends PXObject {
             JOptionPane.showMessageDialog(null, "Image not found");
         }
 
-        
     }
 
     public void paint(int mouseDX, int mouseDY, Graphics g) {

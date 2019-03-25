@@ -32,6 +32,6 @@ public class PXEllipse extends PXObject {
         yPos += dy;
 
         g.setColor(color);
-        g.drawOval(xPos + (int)(mouseDX * moveMult), yPos + (int)(mouseDY * moveMult), width, height);
+        g.fillOval(xPos + (int)(mouseDX * moveMult), yPos + (int)(mouseDY * moveMult), width, height);
     }
 }

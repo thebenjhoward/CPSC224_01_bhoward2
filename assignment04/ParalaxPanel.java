@@ -1,9 +1,7 @@
-import javax.swing.*;
 import javax.swing.JPanel;
 import java.util.*;
 import javax.swing.Timer;
 import java.awt.Graphics;
-import java.awt.Color;
 import java.awt.event.*;
 
 public class ParalaxPanel extends JPanel implements ActionListener {
@@ -33,6 +31,8 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         repaint();
     }
 
+    /**Paints all objects in pxObjects
+     * @param g Graphics object for the component */
     public void paint(Graphics g) {
         super.paint(g); // call superclass's paintComponent
 
@@ -40,7 +40,6 @@ public class ParalaxPanel extends JPanel implements ActionListener {
             obj.paint(xDist, yDist, g);
         }
 
-        mouseDX = mouseDY = 0;
     }
 
     private class ParalaxMouseListner implements MouseListener {
