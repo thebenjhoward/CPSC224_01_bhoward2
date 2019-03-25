@@ -3,6 +3,7 @@ import java.util.*;
 import javax.swing.Timer;
 import java.awt.Graphics;
 import java.awt.event.*;
+import java.awt.Color;
 
 public class ParalaxPanel extends JPanel implements ActionListener {
     private int delay = 10;
@@ -13,8 +14,8 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     private int currentY;
     private int lineX;
     private int lineY;
-    private boolean drawShape;
-    private boolean dragged;
+    private boolean drawingShape;
+    private boolean isDragged;
 
     private ArrayList<PXObject> pxObjects;
 
@@ -45,22 +46,20 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g); // call superclass's paintComponent
 
-        if (drawShape)
-            g.drawRect(currentX, currentY, 10, 10);
-
-        if (dragged) {
-            g.drawLine(lineX, lineY, currentX, currentY);
-        }
-
         for (PXObject obj : pxObjects) {
             obj.paint(xDist, yDist, g);
+        }
+
+        if (isDragged) {
+            g.setColor(Color.decode("0xff00d2"));
+            g.drawLine(lineX, lineY, currentX, currentY);
         }
 
     }
 
     private class ParalaxMouseListner implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-            drawShape = true;
+            drawingShape = true;
         }
 
         public void mouseExited(MouseEvent e) {
@@ -79,8 +78,8 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         }
 
         public void mouseReleased(MouseEvent e) {
-            drawShape = true;
-            dragged = false;
+            drawingShape = true;
+            isDragged = false;
             repaint();
         }
     }
@@ -88,7 +87,7 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     private class ParalaxMotionListener implements MouseMotionListener {
         // unused
         public void mouseDragged(MouseEvent e) {
-            dragged = true;
+            isDragged = true;
             currentX = e.getX();
             currentY = e.getY();
             repaint();
