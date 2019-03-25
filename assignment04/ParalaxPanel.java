@@ -11,6 +11,10 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     protected Timer timer;
     private int xDist;
     private int yDist;
+    private int currentX;
+    private int currentY;
+    private int lineX;
+    private int lineY;
 
     private ArrayList<PXObject> pxObjects;
 
@@ -36,20 +40,26 @@ public class ParalaxPanel extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g); // call superclass's paintComponent
 
+        if(drawShape)
+          g.drawRect(currentX, currentY, 10, 10);
+
+        if(dragged){
+          g.drawLine(lineX, lineY, currentX, currentY);
+        }
+
         for (PXObject obj : pxObjects) {
             obj.paint(xDist, yDist, g);
         }
 
-        mouseDX = mouseDY = 0;
     }
 
     private class ParalaxMouseListner implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-            // not implemented
+          drawShape = true;
         }
 
         public void mouseExited(MouseEvent e) {
-            // not implemented
+
         }
 
         public void mouseEntered(MouseEvent e) {
@@ -58,22 +68,33 @@ public class ParalaxPanel extends JPanel implements ActionListener {
         }
 
         public void mousePressed(MouseEvent e) {
-            // not implemented
+          lineX = e.getX();
+          lineY = e.getY();
+          repaint();
         }
 
         public void mouseReleased(MouseEvent e) {
-            // not implemented
+          drawShape = true;
+          dragged = false;
+          repaint();
         }
     }
 
     private class ParalaxMotionListener implements MouseMotionListener {
         // unused
         public void mouseDragged(MouseEvent e) {
+            dragged = true;
+            currentX = e.getX();
+            currentY = e.getY();
+            repaint();
+
         }
 
         public void mouseMoved(MouseEvent e) {
             xDist = e.getX() - 500;
             yDist = e.getY() - 500;
+            currentX = e.getX();
+            currentY = e.getY();
         }
     }
 
