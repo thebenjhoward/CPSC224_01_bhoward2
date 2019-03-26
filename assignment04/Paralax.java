@@ -34,22 +34,31 @@ public class Paralax {
         PXTriangle mount3 = new PXTriangle(320, 80, 0, 600, 640, 600, 0.1f, Color.decode("0xefe5ee"));
         pPanel.addPXObject(mount3);
 
-        
-
-
-
         //ground
-        PXRectangle groundRect = new PXRectangle(960, 240, 320, 480, 0.25f, Color.GREEN);
+        PXRectangle groundRect = new PXRectangle(960, 240, 320, 400, 0.15f, Color.GREEN);
         pPanel.addPXObject(groundRect);
         
+        //trees
         for(int i = 0; i < 16; i++)
         {
-            pPanel.addPXObject(PXObject.CreateTree(50, 100, 50 * i, 320, 0.15f, Color.decode("0x0d590d")));
+            pPanel.addPXObject(PXObject.CreateTree(50, 100, 50 * i, 280, 0.15f, Color.decode("0x0d590d")));
         }
         for(int i = 0; i < 8; i++)
         {
-            pPanel.addPXObject(PXObject.CreateTree(80, 160, 100 * i, 340, 0.25f, Color.decode("0x208020")));
+            pPanel.addPXObject(PXObject.CreateTree(80, 160, 100 * i, 300, 0.25f, Color.decode("0x208020")));
         }
+
+        //clouds
+        PXImage cloud1 = new PXImage(0, 120, "cloud01.png", 0.0f);
+        cloud1.setMovement(2, 0);
+        pPanel.addPXObject(cloud1);
+        PXImage cloud2 = new PXImage(320, 120, "cloud02.png", 0.0f);
+        cloud2.setMovement(1, 0);
+        pPanel.addPXObject(cloud2);
+        PXImage cloud3 = new PXImage(640, 120, "cloud03.png", 0.0f);
+        cloud3.setMovement(3, 0);
+        pPanel.addPXObject(cloud3);
+
 
 
     }

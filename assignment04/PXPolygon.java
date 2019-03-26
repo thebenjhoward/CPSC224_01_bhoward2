@@ -5,8 +5,15 @@ import java.awt.Color;
 public class PXPolygon extends PXObject {
 
     private Polygon poly;
+    private Polygon currPoly;
     private Color color;
 
+    /**
+     * default constructor for PXPolygon
+     * @param poly polygon to be displayed
+     * @param moveMult intensity of paralax effect
+     * @param color color of the polygon
+     */
     public PXPolygon(Polygon poly, float moveMult, Color color) {
         this.poly = poly;
         this.moveMult = moveMult;
@@ -14,32 +21,40 @@ public class PXPolygon extends PXObject {
     }
 
     public void paint(int mouseDX, int mouseDY, Graphics g) {
-        if (isMoving()) {
-            int xPos = 0, yPos = 0;
-            for (int i = 0; i < poly.npoints; i++) {
-                xPos += poly.xpoints[i];
-                yPos += poly.ypoints[i];
-            }
-            xPos /= poly.npoints;
-            yPos /= poly.npoints;
+        int[] centroid = getCentroid(currPoly);
 
-            if (xPos > (Paralax.PANEL_WIDTH * 2)) {
-                xPos = -100;
+        if (isMoving()) {
+
+            if (centroid[0] > (Paralax.PANEL_WIDTH * 2)) {
+                currPoly = poly;
             }
-            if (yPos > (Paralax.PANEL_HEIGHT * 2)) {
-                yPos = -100;
+            if (centroid[1] > (Paralax.PANEL_HEIGHT * 2)) {
+                currPoly = poly;
             }
         }
 
-        Polygon cpyPolygon = new Polygon(poly.xpoints, poly.ypoints, poly.npoints);
-        for(int i = 0; i < poly.npoints; i++)
-        {
-            cpyPolygon.xpoints[i] += (mouseDX * moveMult) + dx;
-            cpyPolygon.ypoints[i] += (mouseDY * moveMult) + dy;
+        Polygon destPolygon = new Polygon(poly.xpoints, poly.ypoints, poly.npoints);
+        for (int i = 0; i < poly.npoints; i++) {
+            destPolygon.xpoints[i] += (mouseDX * moveMult);
+            destPolygon.ypoints[i] += (mouseDY * moveMult);
+        }
+
+        for (int i = 0; i < poly.npoints; i++) {
+            if (Math.abs(destPolygon.xpoints[i] - currPoly.xpoints[i]) > (int) (mouseDX * moveMult) / 12) {
+                currPoly.xpoints[i] += (destPolygon.xpoints[i] - currPoly.xpoints[i]) / 12;
+            } else {
+                currPoly.xpoints[i] = destPolygon.xpoints[i];
+            }
+
+            if (Math.abs(destPolygon.ypoints[i] - currPoly.ypoints[i]) > (int) (mouseDY * moveMult) / 12) {
+                currPoly.ypoints[i] += (destPolygon.ypoints[i] - currPoly.ypoints[i]) / 12;
+            } else {
+                currPoly.ypoints[i] = destPolygon.ypoints[i];
+            }
         }
 
         g.setColor(color);
-        g.fillPolygon(cpyPolygon);
+        g.fillPolygon(currPoly);
     }
 
 }

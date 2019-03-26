@@ -9,6 +9,12 @@ public class PXTree extends PXObject {
         this.tree = tree;
     }
 
+    /**
+     * creates a new tree with the given rectangle and triangle
+     * @param trunk the trunk of the tree
+     * @param tree the head or triangle part of the tree
+     * @return a new PXTree with the given trunk and top
+     */
     public static PXTree createTree(PXRectangle trunk, PXTriangle tree) {
         return new PXTree(trunk, tree);
     }
