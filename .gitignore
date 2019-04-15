@@ -1,5 +1,11 @@
-*.class
+# vscode config files
 */.vscode/*
 */.vscode/launch.json
 */.vscode/settings.json
+
+# compressed files
 *.zip
+
+# binaries
+*.jar
+*.class

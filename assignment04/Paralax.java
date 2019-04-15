@@ -18,6 +18,10 @@ public class Paralax {
         frame.setVisible(true);
     }
 
+    /**
+     * populates a paralax panel with the scene
+     * @param pPanel the panel to be populated
+     */
     private static void populateParalax(ParalaxPanel pPanel)
     {
         //sky
