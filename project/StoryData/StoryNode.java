@@ -1,3 +1,5 @@
+package StoryData;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
@@ -68,12 +70,24 @@ public class StoryNode {
         return optionText;
     }
 
+    public void setOptionText(String optionText) {
+        this.optionText = optionText;
+    }
+
     public String getStoryText() {
         return storyText;
     }
 
+    public void setStoryText(String storyText) {
+        this.storyText = storyText;
+    }
+
     public Image getStoryImage() {
         return storyImage;
+    }
+
+    public void setStoryImage(Image storyImage) {
+        this.storyImage = storyImage;
     }
 
     public StoryNode getParentNode() {
@@ -120,5 +134,19 @@ public class StoryNode {
 
         }
 
+    }
+
+    public int getChildCount() {
+        for (int i = 0; i < 4; i++) {
+            if (children[i] == null) {
+                return i;
+            }
+        }
+        return 4;
+    }
+
+    @Override
+    public String toString() {
+        return optionText;
     }
 }
