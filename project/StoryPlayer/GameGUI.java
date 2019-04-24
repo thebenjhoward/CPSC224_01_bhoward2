@@ -10,12 +10,12 @@ public class GameGUI extends JFrame{
   public GameGUI() {
       // Display a title
       setTitle("Bandersnatch");
-      setSize(500, 500);
+      setSize(750, 500);
 
       choices = new ChoicesPanel();
 
       // Create a BorderLayout manager.
-      setLayout(new BorderLayout());
+      setLayout(new GridLayout(1, 1));
       add(choices);
 
       setVisible(true);
