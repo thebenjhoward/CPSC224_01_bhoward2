@@ -13,12 +13,15 @@ public class StoryPanel extends JPanel {
   public StoryPanel(){
     initializeGUI();
     setNode(null);
-    
+
   }
 
   public StoryPanel(StoryNode rootNode){
       initializeGUI();
       setNode(rootNode);
+      choices = new ChoicesPanel();
+      info = new InfoPanel();
+      
   }
 
   /*---------------------------------------------------------
