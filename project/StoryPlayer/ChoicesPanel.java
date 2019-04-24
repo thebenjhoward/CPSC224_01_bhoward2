@@ -51,8 +51,3 @@ public class ChoicesPanel extends JPanel {
     }
 
 }
-
-
-public static void main(String args[]){
-  setResizeable(false);
-}
