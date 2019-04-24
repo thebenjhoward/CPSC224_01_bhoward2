@@ -23,32 +23,33 @@ public class NodeEditPanel extends JPanel {
 
     private ActionListener saveListener;
 
-    public NodeEditPanel()
-    {
+    public NodeEditPanel() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         // set up optionText panel
         JPanel optionTextPanel = new JPanel();
         optionTextPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         optionTextPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        
         optionTextLabel = new JLabel("Option Text: ");
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
+        constraints.weightx = 1.0;
         optionTextPanel.add(optionTextLabel, constraints);
 
         optionTextArea = new JTextArea();
         optionTextArea.setLineWrap(true);
         optionTextArea.setRows(3);
+        optionTextArea.setColumns(optionTextArea.getColumns() * 2);
 
         JScrollPane optionScrollPanel = new JScrollPane(optionTextArea);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridheight = 4;
+        constraints.weightx = 1.0;
         optionTextPanel.add(optionScrollPanel, constraints);
 
         this.add(optionTextPanel);
@@ -58,11 +59,11 @@ public class NodeEditPanel extends JPanel {
         storyTextPanel.setLayout(new GridBagLayout());
         storyTextPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        
         storyTextLabel = new JLabel("Story Text: ");
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;
         constraints.gridy = 0;
+        constraints.weightx = 1.0;
         storyTextPanel.add(storyTextLabel, constraints);
 
         storyTextArea = new JTextArea();
@@ -73,6 +74,7 @@ public class NodeEditPanel extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 5;
         constraints.gridheight = 4;
+        constraints.weightx = 1.0;
         storyTextPanel.add(storyScrollPanel, constraints);
 
         this.add(storyTextPanel);
@@ -80,6 +82,7 @@ public class NodeEditPanel extends JPanel {
         // set up save button
         saveButton = new JButton("Save Node");
         saveButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        saveButton.addActionListener(new SaveListener());
 
         this.add(saveButton);
 
