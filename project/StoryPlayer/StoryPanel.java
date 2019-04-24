@@ -1,7 +1,6 @@
 package StoryPlayer;
 
 import StoryData.StoryNode;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 

@@ -1,6 +1,6 @@
 package StoryDesigner;
 
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import javax.swing.*;
 import StoryData.StoryNode;
 
@@ -17,7 +17,7 @@ public class TestFile extends JFrame {
         StoryNode child7 = new StoryNode("child7", "storyTextChild7", null, child6);
 
         JPanel mainPane = new JPanel();
-        mainPane.setLayout(new GridLayout(1, 2));
+        mainPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         StoryTreePanel storyPanel = new StoryTreePanel(root);
         JScrollPane scrollPane = new JScrollPane(storyPanel);
@@ -30,9 +30,10 @@ public class TestFile extends JFrame {
 
         test.add(mainPane);
 
-        test.setSize(500, 500);
+        //test.setSize(500, 500);
+        
         test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        test.pack();
         test.setVisible(true);
 
     }

@@ -3,8 +3,6 @@ package StoryDesigner;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-// TODO: Maybe move this to a master GUI class
-
 public class StorySelectionListener implements ActionListener {
     StoryTreePanel storyTreePanel;
     NodeEditPanel nodeEditPanel;

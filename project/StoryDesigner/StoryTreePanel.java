@@ -1,8 +1,8 @@
 package StoryDesigner;
 
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +34,7 @@ public class StoryTreePanel extends JPanel {
         nodeTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         nodeTree.addTreeSelectionListener(new StoryTreeListener());
         treeScrollPane = new JScrollPane(nodeTree);
+        this.setBackground(Color.WHITE);
         
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
@@ -54,7 +55,7 @@ public class StoryTreePanel extends JPanel {
         });
         buttonPanel.add(removeButton);
 
-        this.setLayout(new FlowLayout(FlowLayout.LEFT));
+        this.setLayout(new BorderLayout());
         // this.setLayout(new GridBagLayout());
         // GridBagConstraints constraints = new GridBagConstraints();
 
@@ -65,7 +66,10 @@ public class StoryTreePanel extends JPanel {
         // constraints.fill = GridBagConstraints.BOTH;
         // this.add(treeScrollPane, constraints);
 
-        this.add(nodeTree);
+        this.add(treeScrollPane, BorderLayout.CENTER);
+        this.add(buttonPanel, BorderLayout.SOUTH);
+
+        this.setPreferredSize(new Dimension(700, 600));
     }
 
     public void loadTree(StoryNode root) {
@@ -105,6 +109,7 @@ public class StoryTreePanel extends JPanel {
             DefaultMutableTreeNode newTreeNode = new DefaultMutableTreeNode(newNode);
             currTreeNode.add(newTreeNode);
             nodeTree.setLeadSelectionPath(new TreePath(newTreeNode.getPath()));
+            nodeTree.updateUI();
         }
     }
 
