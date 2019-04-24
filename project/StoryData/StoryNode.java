@@ -80,7 +80,7 @@ public class StoryNode {
     }
 
     /**
-     * gets whether the parent is the root of the node tree
+     * Gets whether the parent is the root of the node tree
      * 
      * @return true if it is the parent, false otherwise
      */
@@ -99,7 +99,7 @@ public class StoryNode {
     }
 
     /**
-     * sets the text to be displayed as the button option when the node's parent is
+     * Sets the text to be displayed as the button option when the node's parent is
      * active
      * 
      * @param optionText the option text to be displayed

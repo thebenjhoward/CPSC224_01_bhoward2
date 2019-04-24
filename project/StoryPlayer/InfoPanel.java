@@ -9,25 +9,19 @@ import java.io.IOException;
 import javax.imageio.*;
 
 public class InfoPanel extends JPanel {
-    private JLabel storyLabel;
     private JTextArea storyTextArea;
     private JLabel imageLabel;
     private Image tempImage; // remove later
 
     public InfoPanel() {
         // set up panel layout
-        // this.setLayout(new GridBagLayout());
-        // GridBagConstraints rootConstraints = new GridBagConstraints();
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        // set up story label
-        // storyLabel = new JLabel(
-        //         "<html><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></html>");
-        // storyLabel.setMaximumSize(new Dimension(530, Integer.MAX_VALUE));
-        // JScrollPane storyScrollPane = new JScrollPane(storyLabel);
+        // set up story area
         storyTextArea = new JTextArea("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         storyTextArea.setLineWrap(true);
         storyTextArea.setWrapStyleWord(true);
+        storyTextArea.setEditable(false);
         JScrollPane storyScrollPane = new JScrollPane(storyTextArea);
         storyScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         storyScrollPane.setPreferredSize(new Dimension(530, 200));
@@ -40,27 +34,10 @@ public class InfoPanel extends JPanel {
         imageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // add stuff
-        // // storyLabel
-        // rootConstraints.gridx = 0;
-        // rootConstraints.gridy = 0;
-        // rootConstraints.gridwidth = 6;
-        // rootConstraints.fill = GridBagConstraints.BOTH;
-        // rootConstraints.weightx = 1.0;
-        // rootConstraints.weighty = 1.0;
-        // this.add(storyScrollPane, rootConstraints);
-
-        // // imageLabel
-        // rootConstraints.gridx = 6;
-        // rootConstraints.gridy = 0;
-        // rootConstraints.gridwidth = 4;
-        // rootConstraints.fill = GridBagConstraints.BOTH;
-        // rootConstraints.weightx = 1.0;
-        // rootConstraints.weighty = 1.0;
-        // this.add(imageLabel, rootConstraints);
-
         this.add(storyScrollPane);
         this.add(imageLabel);
         this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        this.setPreferredSize(new Dimension(750, 200));
     }
 
     private void loadImage() {
@@ -72,10 +49,10 @@ public class InfoPanel extends JPanel {
     }
 
     public void setText(String text) {
-
+        storyTextArea.setText(text);
     }
 
     public void setImage(Image image) {
-
+        imageLabel.setIcon(new ImageIcon(image));
     }
 }
