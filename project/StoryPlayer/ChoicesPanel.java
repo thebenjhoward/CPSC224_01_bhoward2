@@ -4,5 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class InfoPanel extends JPanel {
+public class ChoicesPanel extends JPanel {
+
 }
