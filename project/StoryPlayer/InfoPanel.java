@@ -49,7 +49,7 @@ public class InfoPanel extends JPanel {
 
     public void setText(String text) {
         storyTextArea.setText(text);
-        storyTextArea.setEnabled(!(text == null || text == ""));
+        storyTextArea.setEnabled(!(text == null || text.equals("")));
     }
 
     public void setImage(Image image) {

@@ -35,7 +35,7 @@ public class StoryTreePanel extends JPanel {
         nodeTree.addTreeSelectionListener(new StoryTreeListener());
         treeScrollPane = new JScrollPane(nodeTree);
         this.setBackground(Color.WHITE);
-        
+
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
 
@@ -56,15 +56,6 @@ public class StoryTreePanel extends JPanel {
         buttonPanel.add(removeButton);
 
         this.setLayout(new BorderLayout());
-        // this.setLayout(new GridBagLayout());
-        // GridBagConstraints constraints = new GridBagConstraints();
-
-        // // add tree panel
-        // constraints.gridheight = 450;
-        // constraints.gridx = 0;
-        // constraints.gridy = 0;
-        // constraints.fill = GridBagConstraints.BOTH;
-        // this.add(treeScrollPane, constraints);
 
         this.add(treeScrollPane, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -72,11 +63,18 @@ public class StoryTreePanel extends JPanel {
         this.setPreferredSize(new Dimension(700, 600));
     }
 
-    public void loadTree(StoryNode root) {
+    private void loadTree(StoryNode root) {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(root);
         populateTree(rootNode);
 
         nodeTree = new JTree(rootNode);
+    }
+
+    public void replaceTree(StoryNode root) {
+        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(root);
+        populateTree(rootNode);
+
+        ((DefaultTreeModel) nodeTree.getModel()).setRoot(rootNode);
     }
 
     private void populateTree(DefaultMutableTreeNode currentNode) {
@@ -108,21 +106,25 @@ public class StoryTreePanel extends JPanel {
             DefaultMutableTreeNode currTreeNode = (DefaultMutableTreeNode) nodeTree.getLastSelectedPathComponent();
             DefaultMutableTreeNode newTreeNode = new DefaultMutableTreeNode(newNode);
             currTreeNode.add(newTreeNode);
+            nodeTree.expandPath(new TreePath(currTreeNode.getPath()));
             nodeTree.setLeadSelectionPath(new TreePath(newTreeNode.getPath()));
             nodeTree.updateUI();
         }
     }
 
     public void removeSelectedNode() {
-        int result = JOptionPane.showConfirmDialog(this.getRootPane(), "Are you sure you want to remove this node?",
-                "Remove Node?", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            DefaultMutableTreeNode deleteNode = (DefaultMutableTreeNode) nodeTree.getLastSelectedPathComponent();
-            if (deleteNode != null && deleteNode.getParent() != null) {
-                DefaultTreeModel model = (DefaultTreeModel) nodeTree.getModel();
-                model.removeNodeFromParent(deleteNode);
-                currentNode.removeFromParent();
-                currentNode = null;
+        if(nodeTree.getLastSelectedPathComponent() != nodeTree.getModel().getRoot())
+        {
+            int result = JOptionPane.showConfirmDialog(this.getRootPane(), "Are you sure you want to remove this node?",
+                    "Remove Node?", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                DefaultMutableTreeNode deleteNode = (DefaultMutableTreeNode) nodeTree.getLastSelectedPathComponent();
+                if (deleteNode != null && deleteNode.getParent() != null) {
+                    currentNode.removeFromParent();
+                    currentNode = null;
+                    DefaultTreeModel model = (DefaultTreeModel) nodeTree.getModel();
+                    model.removeNodeFromParent(deleteNode);
+                }
             }
         }
     }

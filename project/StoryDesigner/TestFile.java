@@ -1,5 +1,6 @@
 package StoryDesigner;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.*;
 import StoryData.StoryNode;
@@ -16,6 +17,8 @@ public class TestFile extends JFrame {
         StoryNode child6 = new StoryNode("child6", "storyTextChild6", null, child5);
         StoryNode child7 = new StoryNode("child7", "storyTextChild7", null, child6);
 
+        test.setLayout(new BorderLayout());
+
         JPanel mainPane = new JPanel();
         mainPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -26,9 +29,10 @@ public class TestFile extends JFrame {
         NodeEditPanel nodePanel = new NodeEditPanel();
         mainPane.add(nodePanel);
 
-        storyPanel.addTreeListener(new StorySelectionListener(storyPanel, nodePanel));
+        //storyPanel.addTreeListener(new StorySelectionListener(storyPanel, nodePanel));
 
-        test.add(mainPane);
+        test.add(mainPane, BorderLayout.CENTER);
+        test.add(new DesignerMenuPanel(), BorderLayout.NORTH);
 
         //test.setSize(500, 500);
         

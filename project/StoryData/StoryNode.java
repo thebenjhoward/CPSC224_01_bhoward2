@@ -208,6 +208,7 @@ public class StoryNode {
             JAXBContext context = JAXBContext.newInstance(StoryNode.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.marshal(this, writer);
+            writer.close();
 
         } catch (IOException e) {
 
@@ -233,7 +234,8 @@ public class StoryNode {
 
     public void removeFromParent() {
         boolean foundNode = false;
-        for(int i = 0; i < parent.getChildCount(); i++) {
+        int childCount = parent.getChildCount();
+        for(int i = 0; i < childCount; i++) {
             if(parent.children[i] == this) {
                 parent.children[i] = null;
                 foundNode = true;
