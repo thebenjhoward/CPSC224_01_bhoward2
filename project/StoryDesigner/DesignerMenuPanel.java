@@ -18,7 +18,7 @@ public class DesignerMenuPanel extends JPanel implements ActionListener {
     public DesignerMenuPanel() {
         globalEventListener = null;
         fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("XML Files", "*.xml"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
         this.setLayout(new GridLayout(1, 1));
 
         // menu bar, menu, and items

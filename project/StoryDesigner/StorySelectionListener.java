@@ -10,7 +10,6 @@ public class StorySelectionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Node selected");
         nodeEditPanel.changeNode(storyTreePanel.getCurrentNode());
         designerFrame.changesMade();
     }

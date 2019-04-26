@@ -1,7 +1,10 @@
 package StoryData;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -13,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 @XmlRootElement(name = "StoryNode")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class StoryNode {
 
     @XmlElement(name = "OptionText")
@@ -24,6 +28,7 @@ public class StoryNode {
     @XmlElement(name = "StoryImage")
     private Image storyImage;
 
+    @XmlTransient
     private StoryNode parent;
 
     @XmlElement(name = "Child")
@@ -71,12 +76,36 @@ public class StoryNode {
             JAXBContext context = JAXBContext.newInstance(StoryNode.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             returnNode = (StoryNode) unmarshaller.unmarshal(reader);
+            returnNode.updateParents();
+            returnNode.updateChildren();
         } catch (IOException e) {
-
+            System.out.println(e.toString());
         } catch (JAXBException e2) {
-
+            System.out.println(e2.toString());
         }
         return returnNode;
+    }
+
+    /**
+     * Serializes the node tree to xml and writes to the given path
+     * 
+     * @param path the file to write to
+     */
+    public void writeXml(String path) {
+        File outFile = new File(path);
+        try {
+            FileWriter writer = new FileWriter(outFile);
+            JAXBContext context = JAXBContext.newInstance(StoryNode.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.marshal(this, writer);
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        } catch (JAXBException e2) {
+            System.out.println(e2.toString());
+        }
+
     }
 
     /**
@@ -187,35 +216,25 @@ public class StoryNode {
      * Updates the parent relationships of all the nodes. To be used after loading
      * from xml
      */
-    public void updateParents() {
-        for (int i = 0; i < 4; i++) {
+    private void updateParents() {
+        for (int i = 0; i < children.length; i++) {
             if (children[i] != null) {
                 children[i].parent = this;
                 children[i].updateParents();
             }
         }
     }
+    
+    private void updateChildren() {
+        if(children.length != 4) {
+            StoryNode[] newChildren = new StoryNode[] { null, null, null, null };
+            for(int i = 0; i < children.length; i++) {
+                children[i].updateChildren();
+                newChildren[i] = children[i];
 
-    /**
-     * Serializes the node tree to xml and writes to the given path
-     * 
-     * @param path the file to write to
-     */
-    public void writeXml(String path) {
-        File outFile = new File(path);
-        try {
-            FileWriter writer = new FileWriter(outFile);
-            JAXBContext context = JAXBContext.newInstance(StoryNode.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal(this, writer);
-            writer.close();
-
-        } catch (IOException e) {
-
-        } catch (JAXBException e2) {
-
+            }
+            children = newChildren;
         }
-
     }
 
     /**
@@ -235,11 +254,11 @@ public class StoryNode {
     public void removeFromParent() {
         boolean foundNode = false;
         int childCount = parent.getChildCount();
-        for(int i = 0; i < childCount; i++) {
-            if(parent.children[i] == this) {
+        for (int i = 0; i < childCount; i++) {
+            if (parent.children[i] == this) {
                 parent.children[i] = null;
                 foundNode = true;
-            } else if(foundNode) {
+            } else if (foundNode) {
                 parent.children[i - 1] = parent.children[i];
                 parent.children[i] = null;
             }

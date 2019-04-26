@@ -16,9 +16,6 @@ public class TestInfo extends JFrame {
 
         test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         test.pack();
-        System.out.print(test.getSize().getWidth());
-        System.out.print(" x ");
-        System.out.println(test.getSize().getHeight());
 
         test.setVisible(true);
     }

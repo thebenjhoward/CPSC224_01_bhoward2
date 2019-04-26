@@ -6,11 +6,11 @@ import java.awt.event.*;
 import StoryData.StoryNode;
 
 public class StoryDesigner extends JFrame implements ActionListener {
-        
+
     public static void main(String args[]) {
         new StoryDesigner();
     }
-    
+
     /** Warns the user before creating a new story */
     public static final int NEW_STORY = 0;
 
@@ -30,10 +30,14 @@ public class StoryDesigner extends JFrame implements ActionListener {
     private StoryNode rootNode;
     private boolean unsavedChanges = false;
 
+    /**
+     * Sets up and displays the {@code StoryDesigner} {@code JFrame}
+     */
     public StoryDesigner() {
         rootNode = generateEmptyStory();
-        
+
         this.setLayout(new BorderLayout());
+        this.setTitle("Story Designer");
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -57,15 +61,27 @@ public class StoryDesigner extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * To be executed whenever changes are made to the tree
+     */
     public void changesMade() {
         unsavedChanges = true;
     }
 
+    /**
+     * Generates an empty {@code StoryNode}
+     * 
+     * @return returns a root leaf node
+     */
     private StoryNode generateEmptyStory() {
         return new StoryNode("root", "empty", null, null);
     }
 
     // Menu operations
+
+    /**
+     * Checks for unsaved changes, and creates a new story
+     */
     private void newStory() {
         if (unsavedChanges) {
             int result = JOptionPane.showConfirmDialog(this, "Would you like to save before creating a new story?",
@@ -93,6 +109,11 @@ public class StoryDesigner extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Opens a story file and loads it from the given path
+     * 
+     * @param path The story file to be loaded
+     */
     private void openStory(String path) {
         if (unsavedChanges) {
             int result = JOptionPane.showConfirmDialog(this, "Would you like to save before loading?", "Load Tree",
@@ -120,10 +141,18 @@ public class StoryDesigner extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Saves a story to the given path
+     * 
+     * @param path the path to save the story to
+     */
     private void saveStory(String path) {
         rootNode.writeXml(path);
     }
 
+    /**
+     * Checks for unsaved changes and exits the editor
+     */
     private void exitEditor() {
         if (unsavedChanges) {
             int result = JOptionPane.showConfirmDialog(this, "Would you like to save before exiting?", "Exit",
@@ -147,16 +176,23 @@ public class StoryDesigner extends JFrame implements ActionListener {
         }
     }
 
-    @Override
+    /**
+     * Impements ActionListener.actionPerformed
+     * 
+     * @param e This will contain an ID defined in the static constants
+     *          of {@code StoryDesigner}. For read/write operations, {@code getActionCommand()} will
+     *          be path to save the story to/open the story from
+     * 
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getID() == NEW_STORY) {
-
+            newStory();
         } else if (e.getID() == OPEN_STORY) {
-
+            openStory(e.getActionCommand());
         } else if (e.getID() == SAVE_STORY) {
             saveStory(e.getActionCommand());
         } else if (e.getID() == EXIT_EDITOR) {
-
+            exitEditor();
         }
     }
 
