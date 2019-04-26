@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/** A node-based data structure used for the story being edited or played */
 @XmlRootElement(name = "StoryNode")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StoryNode {
@@ -224,11 +225,14 @@ public class StoryNode {
             }
         }
     }
-    
+
+    /**
+     * Updates the children arrays to all have a size of 4
+     */
     private void updateChildren() {
-        if(children.length != 4) {
+        if (children.length != 4) {
             StoryNode[] newChildren = new StoryNode[] { null, null, null, null };
-            for(int i = 0; i < children.length; i++) {
+            for (int i = 0; i < children.length; i++) {
                 children[i].updateChildren();
                 newChildren[i] = children[i];
 
@@ -251,6 +255,9 @@ public class StoryNode {
         return 4;
     }
 
+    /**
+     * Removes the given node from its parent class and reorders the array properly
+     */
     public void removeFromParent() {
         boolean foundNode = false;
         int childCount = parent.getChildCount();
@@ -267,10 +274,10 @@ public class StoryNode {
 
     @Override
     public String toString() {
-        if (optionText.length() < 10) {
+        if (optionText.length() < 20) {
             return optionText;
         } else {
-            return String.join("", optionText.substring(0, 7), "...");
+            return String.join("", optionText.substring(0, 17), "...");
         }
     }
 }

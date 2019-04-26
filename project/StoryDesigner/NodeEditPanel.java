@@ -9,6 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panel used to edit {@code StoryNode} objects and update changes on the tree
+ */
 public class NodeEditPanel extends JPanel {
 
     private StoryNode currentNode = null;
@@ -22,70 +25,17 @@ public class NodeEditPanel extends JPanel {
 
     private ActionListener saveListener;
 
+    /**
+     * Default Constructor
+     */
     public NodeEditPanel() {
-        // this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        // // set up optionText panel
-        // JPanel optionTextPanel = new JPanel();
-        // optionTextPanel.setLayout(new GridBagLayout());
-        // GridBagConstraints constraints = new GridBagConstraints();
-        // optionTextPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // optionTextLabel = new JLabel("Option Text: ");
-        // constraints.fill = GridBagConstraints.HORIZONTAL;
-        // constraints.gridx = 0;
-        // constraints.gridy = 0;
-        // constraints.weightx = 1.0;
-        // optionTextPanel.add(optionTextLabel, constraints);
-
-        // optionTextArea = new JTextArea();
-        // optionTextArea.setLineWrap(true);
-        // optionTextArea.setRows(3);
-        // optionTextArea.setColumns(optionTextArea.getColumns() * 2);
-
-        // JScrollPane optionScrollPanel = new JScrollPane(optionTextArea);
-        // constraints.fill = GridBagConstraints.HORIZONTAL;
-        // constraints.gridx = 0;
-        // constraints.gridy = 1;
-        // constraints.gridheight = 4;
-        // constraints.weightx = 1.0;
-        // optionTextPanel.add(optionScrollPanel, constraints);
-        // this.add(optionTextPanel);
-
-        // // set up storyText panel
-        // JPanel storyTextPanel = new JPanel();
-        // storyTextPanel.setLayout(new GridBagLayout());
-        // storyTextPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // storyTextLabel = new JLabel("Story Text: ");
-        // constraints.fill = GridBagConstraints.BOTH;
-        // constraints.gridx = 0;
-        // constraints.gridy = 0;
-        // constraints.weightx = 1.0;
-        // storyTextPanel.add(storyTextLabel, constraints);
-
-        // storyTextArea = new JTextArea();
-        // storyTextArea.setLineWrap(true);
-        // storyTextArea.setRows(6);
-        // JScrollPane storyScrollPanel = new JScrollPane(storyTextArea);
-        // constraints.fill = GridBagConstraints.BOTH;
-        // constraints.gridx = 0;
-        // constraints.gridy = 5;
-        // constraints.gridheight = 4;
-        // constraints.weightx = 1.0;
-        // storyTextPanel.add(storyScrollPanel, constraints);
-        // this.add(storyTextPanel);
-
-        // // set up save button
-        // saveButton = new JButton("Save Node");
-        // saveButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        // saveButton.addActionListener(new SaveListener());
-        // this.add(saveButton);
-
         this.initializeComponents();
         this.setPreferredSize(new Dimension(300, 600));
     }
 
+    /**
+     * Initializes all components of the panel
+     */
     private void initializeComponents() {
         // Set up main panel
         this.setLayout(new GridBagLayout());
@@ -97,8 +47,6 @@ public class NodeEditPanel extends JPanel {
         constraints.gridy = 0;
         constraints.gridwidth = 2;
         constraints.anchor = GridBagConstraints.BASELINE_LEADING;
-        //constraints.weightx = 1.0;
-        //constraints.weighty = 1.0;
         constraints.fill = GridBagConstraints.BOTH;
         this.add(optionTextLabel, constraints);
 
@@ -107,7 +55,6 @@ public class NodeEditPanel extends JPanel {
         optionTextArea.setLineWrap(true);
         optionTextArea.setWrapStyleWord(true);
         JScrollPane optionScrollPane = new JScrollPane(optionTextArea);
-        // constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.anchor = GridBagConstraints.BASELINE_LEADING;
@@ -126,8 +73,6 @@ public class NodeEditPanel extends JPanel {
         constraints.anchor = GridBagConstraints.BASELINE_LEADING;
         constraints.gridwidth = 2;
         constraints.gridheight = 1;
-        //constraints.weightx = 1.0;
-        //constraints.weighty = 1.0;
         constraints.fill = GridBagConstraints.BOTH;
         this.add(storyTextLabel, constraints);
 
@@ -136,7 +81,6 @@ public class NodeEditPanel extends JPanel {
         storyTextArea.setLineWrap(true);
         storyTextArea.setWrapStyleWord(true);
         JScrollPane storyScrollPane = new JScrollPane(storyTextArea);
-        // constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = GridBagConstraints.RELATIVE;
         constraints.anchor = GridBagConstraints.BASELINE_LEADING;
@@ -151,7 +95,6 @@ public class NodeEditPanel extends JPanel {
         saveButton = new JButton("Save Node");
         saveButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         saveButton.addActionListener(new SaveListener());
-        // constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = GridBagConstraints.RELATIVE;
         constraints.anchor = GridBagConstraints.BASELINE_LEADING;
@@ -164,7 +107,12 @@ public class NodeEditPanel extends JPanel {
 
         this.changeNode(null);
     }
-
+    
+    /**
+     * Saves, then changes the node being edited
+     * 
+     * @param newNode the node being changed to
+     */
     public void changeNode(StoryNode newNode) {
         saveNode();
         currentNode = newNode;
@@ -188,6 +136,9 @@ public class NodeEditPanel extends JPanel {
         }
     }
 
+    /**
+     * Saves the current node being edited to the tree
+     */
     public void saveNode() {
         if (currentNode != null) {
             currentNode.setStoryText(storyTextArea.getText());

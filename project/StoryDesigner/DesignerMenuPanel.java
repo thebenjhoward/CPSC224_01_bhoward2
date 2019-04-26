@@ -6,6 +6,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 
+/** Panel containing the menubar for the {@code StoryDesigner} */
 public class DesignerMenuPanel extends JPanel implements ActionListener {
     private JFileChooser fileChooser;
     private JMenuBar menuBar;
@@ -15,6 +16,9 @@ public class DesignerMenuPanel extends JPanel implements ActionListener {
     private String saveLocation = "";
     private ActionListener globalEventListener;
 
+    /**
+     * Default Constructor. Sets up all buttons and adds action listeners
+     */
     public DesignerMenuPanel() {
         globalEventListener = null;
         fileChooser = new JFileChooser();
@@ -64,18 +68,38 @@ public class DesignerMenuPanel extends JPanel implements ActionListener {
         this.add(menuBar);
     }
 
+    /**
+     * Sets the Global Event Listener. This listener will relay events to the
+     * {@code StoryDesigner} panel
+     * 
+     * @param l The listener to be added
+     */
     public void setGlobalEventListener(ActionListener l) {
         globalEventListener = l;
     }
 
+    /**
+     * Gets the current save location of the file
+     * 
+     * @return the previously used save location or an empty string if none exists
+     */
     public String getSaveLocation() {
         return saveLocation;
     }
 
+    /**
+     * Used as a final save as if the user has unsaved changes and tries to start a
+     * new story, close the program, or open an existing story. If no save location
+     * is selected, asks the user again until they cancel, say they don't want to
+     * save, or select a location
+     * 
+     * @return The path to the save location, or empty string if none is selected
+     */
     public String saveAsOverwriteDialog() {
         while (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) {
-            int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to continue? Unsaved changes will be lost");
-            if(result == JOptionPane.YES_OPTION) {
+            int result = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to continue? Unsaved changes will be lost");
+            if (result == JOptionPane.YES_OPTION) {
                 return "";
             }
         }

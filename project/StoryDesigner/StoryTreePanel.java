@@ -17,6 +17,10 @@ import javax.swing.tree.TreeSelectionModel;
 
 import StoryData.StoryNode;
 
+/**
+ * The displayed tree for the {@code StoryDesigner}. Also includes add and
+ * remove buttons
+ */
 public class StoryTreePanel extends JPanel {
     private JTree nodeTree;
     private ActionListener listener = null;
@@ -25,10 +29,20 @@ public class StoryTreePanel extends JPanel {
     private JButton addButton, removeButton;
     private JPanel buttonPanel;
 
+    /**
+     * Gets the currently selected {@code StoryNode}
+     * 
+     * @return The currently selected {@code StoryNode}
+     */
     public StoryNode getCurrentNode() {
         return currentNode;
     }
 
+    /**
+     * Creates a new panel with the given node as the root of the tree
+     * 
+     * @param root The starting root of the tree
+     */
     public StoryTreePanel(StoryNode root) {
         loadTree(root);
         nodeTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -63,6 +77,14 @@ public class StoryTreePanel extends JPanel {
         this.setPreferredSize(new Dimension(700, 600));
     }
 
+    /**
+     * Create a {@code TreeNode} structure that mimics the structure of the given
+     * {@code StoryNode} and has each corresponding {@code StoryNode} as the
+     * userObject of the {@code TreeNode}. Also initializes the {@code JTree}. To be
+     * used exclusively by the constructor.
+     * 
+     * @param root The root of the new tree
+     */
     private void loadTree(StoryNode root) {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(root);
         populateTree(rootNode);
@@ -70,6 +92,11 @@ public class StoryTreePanel extends JPanel {
         nodeTree = new JTree(rootNode);
     }
 
+    /**
+     * Resets the tree with a new {@code StoryNode} as the root
+     * 
+     * @param root the new root of the tree
+     */
     public void replaceTree(StoryNode root) {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(root);
         populateTree(rootNode);
@@ -77,6 +104,11 @@ public class StoryTreePanel extends JPanel {
         ((DefaultTreeModel) nodeTree.getModel()).setRoot(rootNode);
     }
 
+    /**
+     * Recursive function for creating a {@code TreeNode} tree based off a {@code StoryNode} tree
+     * 
+     * @param currentNode The current node being populated 
+     */
     private void populateTree(DefaultMutableTreeNode currentNode) {
         StoryNode currentObject = (StoryNode) currentNode.getUserObject();
         for (int i = 0; i < currentObject.getChildCount(); i++) {
@@ -86,10 +118,20 @@ public class StoryTreePanel extends JPanel {
         }
     }
 
+    /**
+     * Adds a listener to alert the other panels when the selected node has changed
+     * 
+     * @param l The listener being added
+     */
     public void addTreeListener(ActionListener l) {
         listener = l;
     }
 
+    /**
+     * Links a {@code NodeEditPanel} to a {@code StoryTreePanel}
+     * 
+     * @param nodeEditPanel the panel being linked
+     */
     public void linkEditor(NodeEditPanel nodeEditPanel) {
         nodeEditPanel.addSaveListener(new ActionListener() {
 
@@ -100,6 +142,9 @@ public class StoryTreePanel extends JPanel {
         });
     }
 
+    /**
+     * Adds a new node to the selected node
+     */
     public void addNode() {
         if (currentNode != null && currentNode.getChildCount() <= 3) {
             StoryNode newNode = new StoryNode("empty node", "", null, currentNode);
@@ -112,9 +157,11 @@ public class StoryTreePanel extends JPanel {
         }
     }
 
+    /**
+     * Removes the currently selected node
+     */
     public void removeSelectedNode() {
-        if(nodeTree.getLastSelectedPathComponent() != nodeTree.getModel().getRoot())
-        {
+        if (nodeTree.getLastSelectedPathComponent() != nodeTree.getModel().getRoot()) {
             int result = JOptionPane.showConfirmDialog(this.getRootPane(), "Are you sure you want to remove this node?",
                     "Remove Node?", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
@@ -129,6 +176,9 @@ public class StoryTreePanel extends JPanel {
         }
     }
 
+    /**
+     * Listener responsible with responding to tree node selection
+     */
     private class StoryTreeListener implements TreeSelectionListener {
 
         @Override

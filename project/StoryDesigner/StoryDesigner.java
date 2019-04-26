@@ -5,6 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 import StoryData.StoryNode;
 
+/**
+ * {@code StoryDesigner} is the main class for the story designer. The
+ * constructor creates, packs, and displays the frame where all the components
+ * are displayed.
+ */
 public class StoryDesigner extends JFrame implements ActionListener {
 
     public static void main(String args[]) {
@@ -179,9 +184,10 @@ public class StoryDesigner extends JFrame implements ActionListener {
     /**
      * Impements ActionListener.actionPerformed
      * 
-     * @param e This will contain an ID defined in the static constants
-     *          of {@code StoryDesigner}. For read/write operations, {@code getActionCommand()} will
-     *          be path to save the story to/open the story from
+     * @param e This will contain an ID defined in the static constants of
+     *          {@code StoryDesigner}. For read/write operations,
+     *          {@code getActionCommand()} will be path to save the story to/open
+     *          the story from
      * 
      */
     public void actionPerformed(ActionEvent e) {
