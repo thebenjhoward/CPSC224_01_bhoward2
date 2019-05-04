@@ -79,7 +79,7 @@ public class StoryDesigner extends JFrame implements ActionListener {
      * @return returns a root leaf node
      */
     private StoryNode generateEmptyStory() {
-        return new StoryNode("root", "empty", null, null);
+        return new StoryNode("root", "empty", null);
     }
 
     // Menu operations

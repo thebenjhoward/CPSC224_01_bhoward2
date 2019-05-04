@@ -147,7 +147,7 @@ public class StoryTreePanel extends JPanel {
      */
     public void addNode() {
         if (currentNode != null && currentNode.getChildCount() <= 3) {
-            StoryNode newNode = new StoryNode("empty node", "", null, currentNode);
+            StoryNode newNode = new StoryNode("empty node", "", currentNode);
             DefaultMutableTreeNode currTreeNode = (DefaultMutableTreeNode) nodeTree.getLastSelectedPathComponent();
             DefaultMutableTreeNode newTreeNode = new DefaultMutableTreeNode(newNode);
             currTreeNode.add(newTreeNode);
