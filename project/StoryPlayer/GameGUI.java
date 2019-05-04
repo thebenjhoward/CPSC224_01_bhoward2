@@ -6,6 +6,10 @@ import StoryData.StoryNode;
 public class GameGUI extends JFrame {
     private ChoicesPanel choices;
 
+    public static void main(String[] args) {
+        new GameGUI();
+    }
+    
     public GameGUI() {
         // Display a title
 
@@ -41,7 +45,4 @@ public class GameGUI extends JFrame {
         this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new GameGUI();
-    }
 }
