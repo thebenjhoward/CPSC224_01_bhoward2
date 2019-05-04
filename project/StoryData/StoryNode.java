@@ -26,9 +26,6 @@ public class StoryNode {
     @XmlElement(name = "StoryText")
     private String storyText;
 
-    @XmlElement(name = "StoryImage")
-    private Image storyImage;
-
     @XmlTransient
     private StoryNode parent;
 
@@ -40,13 +37,11 @@ public class StoryNode {
      * 
      * @param optionText The text to be displayed when the node's parent is active
      * @param storyText  The text to be displayed when the node is active
-     * @param storyImage The image to be displayed when the node is active
      * @param parent     The parent of the node. Set to null if creating a root
      */
-    public StoryNode(String optionText, String storyText, Image storyImage, StoryNode parent) {
+    public StoryNode(String optionText, String storyText, StoryNode parent) {
         this.optionText = optionText;
         this.storyText = storyText;
-        this.storyImage = storyImage;
         this.parent = parent;
 
         this.children = new StoryNode[] { null, null, null, null };
@@ -117,6 +112,16 @@ public class StoryNode {
     public boolean isRoot() {
         return parent == null;
     }
+    
+    
+    /**
+     * Gets whether the parent is the root of the node tree
+     * 
+     * @return true if it is the parent, false otherwise
+     */
+    public boolean isLeaf() {
+        return getChildCount() == 0;
+    }
 
     /**
      * Gets the text to be displayed as the button option when the node's parent is
@@ -127,6 +132,8 @@ public class StoryNode {
     public String getOptionText() {
         return optionText;
     }
+    
+    
 
     /**
      * Sets the text to be displayed as the button option when the node's parent is
@@ -156,24 +163,6 @@ public class StoryNode {
      */
     public void setStoryText(String storyText) {
         this.storyText = storyText;
-    }
-
-    /**
-     * Gets the image associated with the given node
-     * 
-     * @return an Image object associated with the node
-     */
-    public Image getStoryImage() {
-        return storyImage;
-    }
-
-    /**
-     * Sets the image associated with the given node
-     * 
-     * @param storyImage The image to be added to the node
-     */
-    public void setStoryImage(Image storyImage) {
-        this.storyImage = storyImage;
     }
 
     /**
