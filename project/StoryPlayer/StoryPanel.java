@@ -4,10 +4,17 @@ import StoryData.StoryNode;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class StoryPanel extends JPanel {
+public class StoryPanel extends JPanel implements ActionListener {
     private StoryNode currentNode;
     private InfoPanel infoPanel;
     private ChoicesPanel choicesPanel;
+    private ControlsPanel controlsPanel;
+    // private PlayerMenuPanel playerMenuPanel;
+
+    public static final int STORY_OPEN = 0;
+    public static final int STORY_BACK = 1;
+    public static final int STORY_RESET = 2;
+    public static final int STORY_EXIT = 3;
 
     public StoryPanel() {
         initializeGUI();
@@ -33,6 +40,8 @@ public class StoryPanel extends JPanel {
                 choicesPanel.setButtonEnabled(i, false);
             }
             infoPanel.setText("");
+            controlsPanel.setBackEnabled(false);
+            controlsPanel.setResetEnabled(false);
         } else {
             for (int i = 0; i < 4; i++) {
                 if (i < currentNode.getChildCount()) {
@@ -44,6 +53,13 @@ public class StoryPanel extends JPanel {
                 }
             }
             infoPanel.setText(currentNode.getStoryText());
+            if (currentNode.isRoot()) {
+                controlsPanel.setBackEnabled(false);
+                controlsPanel.setResetEnabled(false);
+            } else {
+                controlsPanel.setBackEnabled(true);
+                controlsPanel.setResetEnabled(true);
+            }
         }
     }
 
@@ -51,15 +67,21 @@ public class StoryPanel extends JPanel {
     public void initializeGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        // playerMenuPanel = new PlayerMenuPanel();
         infoPanel = new InfoPanel();
         choicesPanel = new ChoicesPanel();
+        controlsPanel = new ControlsPanel();
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             choicesPanel.setButtonListener(i, new ButtonListener(i));
         }
 
+        controlsPanel.setGlobalListener(this);
+
+        // this.add(playerMenuPanel);
         this.add(infoPanel);
         this.add(choicesPanel);
+        this.add(controlsPanel);
     }
 
     /*---------------------------------------------------------
@@ -78,5 +100,28 @@ public class StoryPanel extends JPanel {
             buttonIndex = index;
         }
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getID() == StoryPanel.STORY_OPEN) {
+            this.setNode(StoryNode.readXml(e.getActionCommand()));
+        } else if (e.getID() == StoryPanel.STORY_BACK) {
+            this.setNode(currentNode.getParentNode());
+        } else if (e.getID() == StoryPanel.STORY_RESET) {
+            if (JOptionPane.showConfirmDialog(this.getRootPane(), "Are you sure you want to reset?", "Reset?",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                StoryNode curr = currentNode;
+                while (!curr.isRoot()) {
+                    curr = curr.getParentNode();
+                }
+                this.setNode(curr);
+            }
+        } else if (e.getID() == StoryPanel.STORY_EXIT) {
+            if (JOptionPane.showConfirmDialog(this.getRootPane(), "Are you sure you want to exit?", "Exit?",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        }
     }
 }
