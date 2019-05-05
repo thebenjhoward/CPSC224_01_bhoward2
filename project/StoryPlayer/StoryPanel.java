@@ -9,7 +9,7 @@ public class StoryPanel extends JPanel implements ActionListener {
     private InfoPanel infoPanel;
     private ChoicesPanel choicesPanel;
     private ControlsPanel controlsPanel;
-    // private PlayerMenuPanel playerMenuPanel;
+    private PlayerMenuPanel playerMenuPanel;
 
     public static final int STORY_OPEN = 0;
     public static final int STORY_BACK = 1;
@@ -39,7 +39,7 @@ public class StoryPanel extends JPanel implements ActionListener {
                 choicesPanel.setButtonText(i, "");
                 choicesPanel.setButtonEnabled(i, false);
             }
-            infoPanel.setText("");
+            infoPanel.setText("File > Open to start a story");
             controlsPanel.setBackEnabled(false);
             controlsPanel.setResetEnabled(false);
         } else {
@@ -67,7 +67,7 @@ public class StoryPanel extends JPanel implements ActionListener {
     public void initializeGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // playerMenuPanel = new PlayerMenuPanel();
+        playerMenuPanel = new PlayerMenuPanel();
         infoPanel = new InfoPanel();
         choicesPanel = new ChoicesPanel();
         controlsPanel = new ControlsPanel();
@@ -76,9 +76,10 @@ public class StoryPanel extends JPanel implements ActionListener {
             choicesPanel.setButtonListener(i, new ButtonListener(i));
         }
 
+        playerMenuPanel.setGlobalListener(this);
         controlsPanel.setGlobalListener(this);
 
-        // this.add(playerMenuPanel);
+        this.add(playerMenuPanel);
         this.add(infoPanel);
         this.add(choicesPanel);
         this.add(controlsPanel);

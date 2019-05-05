@@ -2,59 +2,65 @@ package StoryPlayer;
 
 import StoryData.StoryNode;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.*;
 import java.awt.event.*;
 
-public class PlayerMenuPanel extends JPanel {
-  private JFileChooser fileChooser;
-  private JMenuBar menuBar;
-  private JMenu fileMenu;
-  private JMenuItem open, exit;
-}
+public class PlayerMenuPanel extends JPanel implements ActionListener {
+    private JFileChooser fileChooser;
+    private JMenuBar menuBar;
+    private JMenu fileMenu;
+    private JMenuItem open, exit;
 
-  public PlayerMenuPanel() {
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
-    int result = fileChooser.showOpenDialog(this.getRootPane());
-    this.setLayout(new GridLayout(1, 1));
+    private ActionListener globalEventListener;
 
-    menuBar = new JMenuBar();
-    fileMenu = new JMenu("File");
-    open = new JMenuItem("Open");
-    exit = new JMenuItem("Exit");
+    public PlayerMenuPanel() {
+        fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Story XML Files", "story"));
 
-    open.addActionListener(this);
-    exit.addActionListener(this);
+        this.setLayout(new GridLayout(1, 1));
 
-    fileMenu.add(open);
-    fileMenu.addSeparator();
-    fileMenu.add(exit);
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu("File");
+        open = new JMenuItem("Open");
+        exit = new JMenuItem("Exit");
 
-    menuBar.add(fileMenu);
-    this.add(menuBar);
+        open.addActionListener(this);
+        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        exit.addActionListener(this);
+        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
 
-  }
-}
+        fileMenu.add(open);
+        fileMenu.addSeparator();
+        fileMenu.add(exit);
 
-
-
-
-  /**
-   * Sets the Global Event Listener. This listener will relay events to the
-   * {@code StoryDesigner} panel
-   *
-   * @param l The listener to be added
-   */
-  public void setGlobalEventListener(ActionListener l) {
-      globalEventListener = l;
-  }
-
-
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == open) {
-
-    } else if (e.getSource() == exit) {
+        menuBar.add(fileMenu);
+        this.add(menuBar);
 
     }
-  }
+
+    /**
+     * Sets the Global Event Listener. This listener will relay events to the
+     * {@code StoryDesigner} panel
+     *
+     * @param l The listener to be added
+     */
+    public void setGlobalListener(ActionListener l) {
+        globalEventListener = l;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == open && globalEventListener != null) {
+            int result = fileChooser.showOpenDialog(this.getRootPane());
+            if (result == JFileChooser.APPROVE_OPTION) {
+                globalEventListener.actionPerformed(
+                        new ActionEvent(this, StoryPanel.STORY_OPEN, fileChooser.getSelectedFile().getPath()));
+            }
+
+        } else if (e.getSource() == exit && globalEventListener != null) {
+            globalEventListener.actionPerformed(new ActionEvent(this, StoryPanel.STORY_EXIT, null));
+        }
+    }
+}

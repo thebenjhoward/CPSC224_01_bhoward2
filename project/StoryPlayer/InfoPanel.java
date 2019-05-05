@@ -21,8 +21,8 @@ public class InfoPanel extends JPanel {
         storyTextArea.setEditable(false);
         JScrollPane storyScrollPane = new JScrollPane(storyTextArea);
         storyScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        storyScrollPane.setPreferredSize(new Dimension(750, 200));
-        storyScrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0));
+        storyScrollPane.setPreferredSize(new Dimension(730, 200));
+        storyScrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // add stuff
         this.add(storyScrollPane);
@@ -34,3 +34,4 @@ public class InfoPanel extends JPanel {
         storyTextArea.setText(text);
         storyTextArea.setEnabled(!(text == null || text.equals("")));
     }
+}
