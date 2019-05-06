@@ -1,12 +1,12 @@
 package StoryPlayer;
 
-import StoryData.StoryNode;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class PlayerMenuPanel extends JPanel implements ActionListener {
     private JFileChooser fileChooser;
     private JMenuBar menuBar;

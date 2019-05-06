@@ -4,6 +4,7 @@ import StoryData.StoryNode;
 import java.awt.event.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class StoryPanel extends JPanel implements ActionListener {
     private StoryNode currentNode;
     private InfoPanel infoPanel;
