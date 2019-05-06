@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 /**
  * Panel used to edit {@code StoryNode} objects and update changes on the tree
  */
+@SuppressWarnings("serial")
 public class NodeEditPanel extends JPanel {
 
     private StoryNode currentNode = null;

@@ -2,8 +2,8 @@ package StoryPlayer;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class GameGUI extends JFrame {
-    private ChoicesPanel choices;
 
     public static void main(String[] args) {
         new GameGUI();

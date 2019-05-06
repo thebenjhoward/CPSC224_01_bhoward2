@@ -21,6 +21,7 @@ import StoryData.StoryNode;
  * The displayed tree for the {@code StoryDesigner}. Also includes add and
  * remove buttons
  */
+@SuppressWarnings("serial")
 public class StoryTreePanel extends JPanel {
     private JTree nodeTree;
     private ActionListener listener = null;
@@ -111,6 +112,7 @@ public class StoryTreePanel extends JPanel {
      */
     private void populateTree(DefaultMutableTreeNode currentNode) {
         StoryNode currentObject = (StoryNode) currentNode.getUserObject();
+        System.out.println(currentObject.toString());
         for (int i = 0; i < currentObject.getChildCount(); i++) {
             DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(currentObject.getChildNode(i));
             currentNode.add(newNode);

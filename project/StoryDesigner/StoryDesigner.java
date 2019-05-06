@@ -10,6 +10,7 @@ import StoryData.StoryNode;
  * constructor creates, packs, and displays the frame where all the components
  * are displayed.
  */
+@SuppressWarnings("serial")
 public class StoryDesigner extends JFrame implements ActionListener {
 
     public static void main(String args[]) {

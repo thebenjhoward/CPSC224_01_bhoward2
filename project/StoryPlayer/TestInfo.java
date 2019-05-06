@@ -4,6 +4,7 @@ package StoryPlayer;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class TestInfo extends JFrame {
     public static void main(String args[]) {
         TestInfo test = new TestInfo();

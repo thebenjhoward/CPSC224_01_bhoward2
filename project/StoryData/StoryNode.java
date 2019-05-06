@@ -235,6 +235,9 @@ public class StoryNode {
      * @return an integer between 1 and 4
      */
     public int getChildCount() {
+        if(this.children.length != 4) {
+            updateChildren();
+        }
         for (int i = 0; i < 4; i++) {
             if (children[i] == null) {
                 return i;

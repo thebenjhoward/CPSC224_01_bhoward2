@@ -1,10 +1,10 @@
 package StoryPlayer;
 
-import StoryData.StoryNode;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class ControlsPanel extends JPanel implements ActionListener {
     private JButton backButton, resetButton;
     private ActionListener globalListener;

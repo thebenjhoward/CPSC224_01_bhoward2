@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /** Panel containing the menubar for the {@code StoryDesigner} */
+@SuppressWarnings("serial")
 public class DesignerMenuPanel extends JPanel implements ActionListener {
     private JFileChooser fileChooser;
     private JMenuBar menuBar;
